@@ -336,6 +336,9 @@ $("#setupForm").onsubmit = async e => {
   try {
     const repo = await gh("");
     if (!repo.permissions?.push) throw new Error("למפתח אין הרשאת כתיבה (Contents: Read and write)");
+    // repo.permissions reflects the *user*, not the token. Probe with an invalid PUT: 403 = token lacks write, 422 = allowed (nothing is written)
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/data/settings.json`, {method:"PUT", headers:{Authorization:`Bearer ${tok}`, Accept:"application/vnd.github+json"}, body:"{}"});
+    if (r.status === 403) throw new Error("למפתח יש רק הרשאת קריאה. ב-GitHub: Edit ← Repository permissions ← Contents ← Read and write ← Update, ואז לנסות שוב");
   } catch (x) {
     TOKEN = null; $("#setupBtn").disabled = false;
     return err.textContent = x.status === 401 ? "המפתח לא תקין" : x.status === 404 ? `למפתח אין גישה לריפו ${REPO}` : x.message;
@@ -514,7 +517,8 @@ async function publish(){
     }
     toast("✓ פורסם! האתר יתעדכן תוך כדקה");
   } catch (x) {
-    toast(x.status === 409 ? "מישהו עדכן את האתר במקביל. רענן את הדף ונסה שוב" : "הפרסום נכשל: " + x.message, true);
+    if (x.status === 403) alert("למפתח הגישה אין הרשאת כתיבה.\n\nכדי לתקן:\n1. github.com/settings/personal-access-tokens\n2. לוחצים על המפתח ← Edit\n3. Repository permissions ← Contents ← Read and write\n4. Update\n\nאחר כך לוחצים שוב ״פרסום לאתר״. השינויים שלך נשמרו בדף.");
+    else toast(x.status === 409 ? "מישהו עדכן את האתר במקביל. רענן את הדף ונסה שוב" : x.status === 401 ? "פג תוקף מפתח הגישה. צא והתחבר מחדש" : "הפרסום נכשל: " + x.message, true);
   }
   btn.disabled = false; btn.textContent = "פרסום לאתר"; updateBar(); renderList();
 }
