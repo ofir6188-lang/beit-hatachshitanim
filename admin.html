@@ -116,13 +116,13 @@ main{padding:20px 0 120px}
   <form class="box" id="setupForm" hidden>
     <h1>הגדרה ראשונה במכשיר הזה</h1>
     <ol class="steps">
-      <li>נכנסים ל<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">יצירת מפתח גישה ב-GitHub</a></li>
-      <li>שם: <b>ניהול אתר</b> · תוקף: <b>שנה</b></li>
-      <li>Repository access: <b>Only select repositories</b> → <b id="repoName"></b></li>
-      <li>Permissions → Repository → <b>Contents: Read and write</b></li>
-      <li>לוחצים Generate ומדביקים כאן את המפתח</li>
+      <li>פותחים את <a href="https://github.com/settings/tokens/new?scopes=public_repo&description=%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener"><b>הקישור הזה</b></a> (הכול כבר מסומן)</li>
+      <li>Expiration: בוחרים <b>90 days</b> או <b>No expiration</b></li>
+      <li>לוחצים <b>Generate token</b> בתחתית העמוד</li>
+      <li>מעתיקים את המפתח (מתחיל ב-<b dir="ltr">ghp_</b>) ומדביקים כאן</li>
     </ol>
-    <label>מפתח גישה (Token)<input type="password" id="setupToken" placeholder="github_pat_..." required autocomplete="off"></label>
+    <p class="small">ריפו: <b id="repoName"></b></p>
+    <label>מפתח גישה (Token)<input type="password" id="setupToken" placeholder="ghp_..." dir="ltr" required autocomplete="off"></label>
     <label>בחירת סיסמה לכניסה<input type="password" id="setupPass" minlength="6" required autocomplete="new-password"></label>
     <label>אימות סיסמה<input type="password" id="setupPass2" minlength="6" required autocomplete="new-password"></label>
     <div class="err" id="setupErr"></div>
