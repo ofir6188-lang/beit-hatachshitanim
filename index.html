@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בית התכשיטנים — שעונים, תכשיטים ואקססוריז</title>
+<meta name="description" content="שעונים, תכשיטים, תיקים ואקססוריז לנשים ולגברים. משלוח מהיר, החזרה קלה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff; --soft:#f6f3ee; --ink:#151515; --muted:#6b6660; --line:#e7e2da;
+  --gold:#a8834f; --gold-dk:#8a6a3c; --sale:#c0392b; --ok:#2e7d4f;
+  --radius:10px; --wrap:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Heebo,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 16px}
+h1,h2,.serif{font-family:"Frank Ruhl Libre",serif}
+
+/* announcement */
+.announce{background:var(--ink);color:#fff;font-size:13px;overflow:hidden;white-space:nowrap}
+.announce .track{display:inline-flex;gap:48px;padding:9px 0;animation:marquee 30s linear infinite}
+.announce span::before{content:"✦";color:var(--gold);margin-left:10px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@media (prefers-reduced-motion:reduce){.announce .track{animation:none}}
+
+/* top bar + header */
+.topbar{border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:36px}
+.topbar a:hover{color:var(--ink)}
+header.main{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.hrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px;gap:16px}
+.logo{font-family:"Frank Ruhl Libre",serif;font-size:28px;white-space:nowrap;font-weight:700;letter-spacing:.5px;text-align:center}
+.logo small{display:block;font-family:Heebo;font-size:10px;letter-spacing:4px;color:var(--gold);font-weight:500;margin-top:-6px}
+.search{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:0 14px;height:40px;max-width:300px;background:var(--soft)}
+.search input{border:0;background:none;outline:none;flex:1;font:inherit;font-size:14px;padding:0 8px;min-width:0}
+.icons{display:flex;gap:6px;justify-content:flex-end}
+.icon-btn{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.icon-btn:hover{background:var(--soft)}
+.icon-btn svg{width:22px;height:22px}
+.badge{position:absolute;top:2px;left:2px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.burger{display:none}
+.badge[hidden]{display:none}
+body{overflow-x:hidden}
+.hero>*,.sale-banner>*,.service>*{min-width:0}
+.hero .imgs{overflow:hidden;grid-template-rows:1fr 1fr}
+.hero .imgs img{min-height:0}
+
+/* nav */
+nav.cats{border-top:1px solid var(--line)}
+nav.cats>ul{list-style:none;display:flex;justify-content:center;gap:4px}
+nav.cats>ul>li{position:static}
+nav.cats>ul>li>a{display:block;padding:13px 14px;font-size:15px;font-weight:500}
+nav.cats>ul>li>a.sale{color:var(--sale);font-weight:700}
+nav.cats>ul>li:hover>a{color:var(--gold)}
+.mega{position:absolute;inset-inline:0;top:100%;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 18px 30px -18px rgba(0,0,0,.18);display:none}
+nav.cats li:hover .mega,nav.cats li:focus-within .mega{display:block}
+.mega .wrap{display:grid;grid-template-columns:repeat(3,1fr) 1.3fr;gap:32px;padding:28px 16px}
+.mega h4{font-size:13px;letter-spacing:1px;color:var(--gold);margin-bottom:10px}
+.mega ul{list-style:none}
+.mega li a{display:block;padding:4px 0;font-size:14px;color:var(--muted)}
+.mega li a:hover{color:var(--ink)}
+.mega .promo{border-radius:var(--radius);overflow:hidden;position:relative;min-height:170px}
+.mega .promo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mega .promo span{position:absolute;bottom:12px;right:12px;background:#fff;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700}
+
+/* hero */
+.hero{position:relative;min-height:540px;display:grid;grid-template-columns:1fr 1fr;background:var(--soft)}
+.hero .txt{display:flex;flex-direction:column;justify-content:center;padding:48px 7vw;gap:18px}
+.eyebrow{font-size:13px;letter-spacing:3px;color:var(--gold);font-weight:700}
+.hero h1{font-size:clamp(36px,5vw,64px);line-height:1.05}
+.hero p{color:var(--muted);font-size:17px;max-width:440px}
+.hero .imgs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.hero .imgs img{width:100%;height:100%;object-fit:cover}
+.hero .imgs img:first-child{grid-row:span 2}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 26px;border-radius:999px;font-weight:700;font-size:15px;transition:.2s}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:var(--gold)}
+.btn-line{border:1.5px solid var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+
+/* trust strip */
+.trust{border-bottom:1px solid var(--line)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:22px 16px}
+.trust div{display:flex;gap:12px;align-items:center;font-size:14px}
+.trust svg{width:30px;height:30px;flex:none;color:var(--gold)}
+.trust b{display:block;font-size:15px}
+.trust small{color:var(--muted)}
+
+section.block{padding:64px 0}
+.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:26px;gap:16px}
+.head h2{font-size:clamp(26px,3vw,36px)}
+.head h2 em{font-style:normal;color:var(--gold)}
+.head a{font-size:14px;font-weight:700;border-bottom:1.5px solid;white-space:nowrap}
+
+/* categories */
+.cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.cat{text-align:center}
+.cat .ph{aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--soft);margin-bottom:10px;border:1px solid var(--line)}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.cat:hover img{transform:scale(1.07)}
+.cat b{font-size:15px}
+
+/* sale banner */
+.sale-banner{background:var(--ink);color:#fff;border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr}
+.sale-banner .t{padding:48px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.sale-banner h2{font-size:clamp(34px,4.5vw,56px);line-height:1}
+.sale-banner h2 span{color:var(--gold)}
+.sale-banner p{color:#bbb}
+.countdown{display:flex;gap:10px}
+.countdown div{background:#262626;border-radius:8px;padding:8px 12px;text-align:center;min-width:62px}
+.countdown b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.countdown small{font-size:11px;color:#aaa}
+.sale-banner img{width:100%;height:100%;object-fit:cover;min-height:320px}
+.btn-gold{background:var(--gold);color:#fff;align-self:flex-start}.btn-gold:hover{background:#fff;color:var(--ink)}
+
+/* tabs + products */
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:500}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*18px)/4);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
+.rail>*{scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 18px}
+.card{position:relative;display:flex;flex-direction:column}
+.card .ph{position:relative;aspect-ratio:4/5;background:var(--soft);border-radius:var(--radius);overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .ph img{transform:scale(1.05)}
+.tag{position:absolute;top:10px;right:10px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#fff}
+.tag.off{background:var(--sale);color:#fff}
+.fav{position:absolute;top:8px;left:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.fav svg{width:18px;height:18px}.fav.on svg{fill:var(--sale);stroke:var(--sale)}
+.quick{position:absolute;inset-inline:10px;bottom:10px;height:42px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:14px;opacity:0;transform:translateY(8px);transition:.25s}
+.card:hover .quick,.quick:focus{opacity:1;transform:none}
+.quick:hover{background:var(--gold)}
+.card .info{padding:12px 2px 0;display:flex;flex-direction:column;gap:3px}
+.brand{font-size:12px;letter-spacing:1.5px;color:var(--muted);font-weight:500}
+.name{font-size:15px;font-weight:500}
+.spec{font-size:12.5px;color:var(--muted)}
+.price{display:flex;gap:8px;align-items:baseline;margin-top:2px}
+.price b{font-size:17px}
+.price s{color:var(--muted);font-size:14px}
+.price b.red{color:var(--sale)}
+.stock{font-size:12px;color:var(--ok);font-weight:500}
+.stock.low{color:#c77700}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)}
+
+/* service */
+.service{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.svc{position:relative;border-radius:16px;overflow:hidden;min-height:300px;color:#fff;display:flex;align-items:flex-end}
+.svc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.svc::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,0) 65%)}
+.svc .t{position:relative;z-index:1;padding:28px;display:flex;flex-direction:column;gap:8px}
+.svc h3{font-family:"Frank Ruhl Libre",serif;font-size:28px}
+.svc p{color:#ddd;max-width:380px}
+.svc a{font-weight:700;border-bottom:1.5px solid;align-self:flex-start}
+
+/* instagram */
+.insta{background:var(--soft)}
+.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.insta-grid a{aspect-ratio:1;overflow:hidden;position:relative}
+.insta-grid img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.insta-grid a:hover img{transform:scale(1.08);filter:brightness(.8)}
+
+/* newsletter */
+.news{text-align:center;max-width:560px;margin:0 auto}
+.news h2{font-size:32px;margin-bottom:8px}
+.news p{color:var(--muted);margin-bottom:20px}
+.news form{display:flex;gap:8px}
+.news input{flex:1;height:48px;border:1px solid var(--line);border-radius:999px;padding:0 20px;font:inherit;min-width:0}
+
+/* footer */
+footer{background:var(--ink);color:#cfcac2;padding-top:56px;font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
+footer h4{color:#fff;font-size:15px;margin-bottom:14px}
+footer ul{list-style:none;display:grid;gap:8px}
+footer a:hover{color:#fff}
+footer .logo{text-align:right;color:#fff}
+.social{display:flex;gap:8px;margin-top:16px}
+.social a{width:38px;height:38px;border-radius:50%;border:1px solid #444;display:grid;place-items:center}
+.social svg{width:18px;height:18px}
+.legal{border-top:1px solid #2c2c2c;margin-top:44px;padding:18px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:#8d877f}
+.pay{display:flex;gap:6px}
+.pay span{border:1px solid #444;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700}
+
+/* whatsapp + cart drawer + toast */
+.wa{position:fixed;bottom:20px;left:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.wa svg{width:30px;height:30px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:60;opacity:0;pointer-events:none;transition:.25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(400px,100%);background:#fff;z-index:70;transform:translateX(-100%);transition:transform .3s;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.drawer h3{font-size:18px}
+.lines{flex:1;overflow:auto;padding:12px 20px}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.line img{width:72px;height:88px;object-fit:cover;border-radius:8px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;margin-top:6px}
+.qty button{width:28px;height:28px}
+.qty span{min-width:20px;text-align:center;font-size:14px}
+.rm{font-size:12px;color:var(--muted);text-decoration:underline}
+.drawer footer{background:none;color:var(--ink);padding:18px 20px;border-top:1px solid var(--line)}
+.ship-bar{font-size:13px;margin-bottom:12px}
+.ship-bar .bar{height:6px;background:var(--soft);border-radius:3px;margin-top:6px;overflow:hidden}
+.ship-bar .bar i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:12px}
+.drawer .btn{width:100%}
+.toast{position:fixed;bottom:24px;right:50%;transform:translate(50%,120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;z-index:80;transition:.3s;font-size:14px}
+.toast.on{transform:translate(50%,0)}
+
+/* mobile menu */
+.mnav{position:fixed;top:0;bottom:0;right:0;width:min(340px,88%);background:#fff;z-index:70;transform:translateX(100%);transition:.3s;overflow:auto;padding:20px}
+.mnav.on{transform:none}
+.mnav details{border-bottom:1px solid var(--line)}
+.mnav summary{padding:14px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between}
+.mnav summary::after{content:"+"}.mnav details[open] summary::after{content:"−"}
+.mnav details a{display:block;padding:6px 12px;color:var(--muted)}
+.mnav details div{padding-bottom:12px}
+
+@media (max-width:1000px){
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .rail{grid-auto-columns:calc((100% - 18px)/2.3)}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .trust .wrap{grid-template-columns:repeat(2,1fr)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fgrid>div:first-child{grid-column:1/-1}
+}
+@media (max-width:760px){
+  .topbar{display:none}
+  nav.cats{display:none}
+  .burger{display:grid}
+  .hrow{grid-template-columns:auto 1fr auto;height:62px}
+  .hrow .search{display:none}
+  .logo{font-size:21px}
+  .logo small{letter-spacing:2px;white-space:nowrap}
+  .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hero .imgs{height:300px;order:-1}
+  .hero .txt{padding:32px 16px}
+  .sale-banner{grid-template-columns:minmax(0,1fr)}
+  .sale-banner .t{padding:28px 20px}
+  .service{grid-template-columns:minmax(0,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr);gap:18px 12px}
+  .insta-grid{grid-template-columns:repeat(3,1fr)}
+  .quick{opacity:1;transform:none;height:36px;font-size:13px}
+  section.block{padding:44px 0}
+  .head{flex-direction:column;align-items:flex-start}
+  .msearch{display:flex !important}
+}
+.msearch{display:none;max-width:none;margin:0 16px 12px}
+</style>
+</head>
+<body>
+
+<div class="announce" aria-label="הודעות">
+  <div class="track" id="track"></div>
+</div>
+
+<div class="topbar"><div class="wrap">
+  <div>📍 שירות לקוחות: א׳–ה׳ 10:00–19:00 · ו׳ 9:00–14:00</div>
+  <div style="display:flex;gap:18px"><a href="#">התחברות / הרשמה</a><a href="#">מעקב הזמנה</a><a href="#footer">צור קשר</a></div>
+</div></div>
+
+<header class="main">
+  <div class="wrap hrow">
+    <div style="display:flex;align-items:center;gap:6px">
+      <button class="icon-btn burger" aria-label="תפריט" onclick="toggleMnav(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="חיפוש שעון, תכשיט, תיק…" oninput="doSearch(this.value)"></label>
+    </div>
+    <a href="#" class="logo">בית התכשיטנים<small>THE JEWELERS HOUSE</small></a>
+    <div class="icons">
+      <a class="icon-btn" href="#" aria-label="החשבון שלי"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></a>
+      <button class="icon-btn" aria-label="מועדפים" onclick="showFavs()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg><span class="badge" id="favCount" hidden>0</span></button>
+      <button class="icon-btn" aria-label="סל קניות" onclick="toggleCart(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount" hidden>0</span></button>
+    </div>
+  </div>
+  <label class="search msearch"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="מה מחפשים היום?" oninput="doSearch(this.value)"></label>
+  <nav class="cats" id="desktopNav"></nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="txt">
+    <div class="eyebrow">קולקציית סתיו 2026</div>
+    <h1>הזמן שלך.<br>הסטייל שלך.</h1>
+    <p>שעונים, תכשיטים ואקססוריז שנבחרו בקפידה, עם אחריות מלאה, משלוח מהיר עד הבית והחזרה בלי שאלות.</p>
+    <div class="btns">
+      <a href="#shop" class="btn btn-dark" onclick="filterCat('watches')">לשעונים</a>
+      <a href="#shop" class="btn btn-line" onclick="filterCat('jewelry')">לתכשיטים</a>
+    </div>
+  </div>
+  <div class="imgs">
+    <img src="img/watch-rose.jpg" alt="שעון נשים בגוון רוז גולד">
+    <img src="img/necklace-moon.jpg" alt="שרשרת זהב עם תליון סהר">
+    <img src="img/hoops-gold.jpg" alt="עגילי חישוק מוזהבים">
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust"><div class="wrap">
+  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>מקור ואחריות מלאה</b><small>כל מוצר עם תעודת אחריות</small></span></div>
+  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><span><b>משלוח חינם מעל ₪299</b><small>עד 1–3 ימי עסקים</small></span></div>
+  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/></svg><span><b>החזרה קלה</b><small>14 יום לפי חוק הגנת הצרכן</small></span></div>
+  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span><b>תשלום מאובטח</b><small>הצפנת SSL · עד 3 תשלומים</small></span></div>
+</div></div>
+
+<!-- CATEGORIES -->
+<section class="block"><div class="wrap">
+  <div class="head"><h2>קנייה לפי <em>קטגוריה</em></h2></div>
+  <div class="cat-grid" id="catGrid"></div>
+</div></section>
+
+<!-- SALE -->
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="sale-banner">
+    <div class="t">
+      <div class="eyebrow">מבצע סוף עונה</div>
+      <h2>עד <span>30%</span> הנחה<br>על מגוון שעונים</h2>
+      <p>המבצע מסתיים בעוד:</p>
+      <div class="countdown" id="countdown"></div>
+      <a href="#shop" class="btn btn-gold" onclick="filterCat('sale')">לכל המבצעים ←</a>
+    </div>
+    <img src="img/watch-white.jpg" alt="שעון לבן מינימליסטי">
+  </div>
+</div></section>
+
+<!-- BEST SELLERS -->
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <h2>הנמכרים <em>ביותר</em></h2>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-g="women" onclick="setBest('women',this)">#נשים</button>
+      <button class="tab" data-g="men" onclick="setBest('men',this)">#גברים</button>
+    </div>
+  </div>
+  <div class="rail" id="bestRail"></div>
+</div></section>
+
+<!-- SERVICES -->
+<section class="block" style="padding-top:0"><div class="wrap service">
+  <div class="svc"><img src="img/wall-clock.jpg" alt=""><div class="t">
+    <h3>מעבדת תיקונים</h3><p>החלפת סוללה, רצועה ותיקון שעונים ותכשיטים, בידי צורף ושען מוסמכים.</p><a href="#">לפרטים ותיאום ←</a></div></div>
+  <div class="svc"><img src="img/pearls.jpg" alt=""><div class="t">
+    <h3>אריזת מתנה חינם</h3><p>כל הזמנה מגיעה בקופסת מתנה ממותגת, עם כרטיס ברכה אישי לבחירתכם.</p><a href="#shop" onclick="filterCat('all')">לבחירת מתנה ←</a></div></div>
+</div></section>
+
+<!-- SHOP -->
+<section class="block" id="shop" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <h2 id="shopTitle">כל <em>המוצרים</em></h2>
+    <div class="tabs" id="shopTabs"></div>
+  </div>
+  <div class="grid" id="shopGrid"></div>
+</div></section>
+
+<!-- INSTAGRAM -->
+<section class="block insta"><div class="wrap">
+  <div class="head"><h2>עקבו אחרינו <em>@beit.hatachshitanim</em></h2><a href="#">לאינסטגרם ←</a></div>
+  <div class="insta-grid">
+    <a href="#"><img src="img/flatlay.jpg" alt="" loading="lazy"></a>
+    <a href="#"><img src="img/watch-smart.jpg" alt="" loading="lazy"></a>
+    <a href="#"><img src="img/earrings-blue.jpg" alt="" loading="lazy"></a>
+    <a href="#"><img src="img/bag-croco.jpg" alt="" loading="lazy"></a>
+    <a href="#"><img src="img/ring.jpg" alt="" loading="lazy"></a>
+    <a href="#"><img src="img/scarf.jpg" alt="" loading="lazy"></a>
+  </div>
+</div></section>
+
+<!-- NEWSLETTER -->
+<section class="block"><div class="wrap news">
+  <h2>10% הנחה על ההזמנה הראשונה</h2>
+  <p>הצטרפו למועדון והיו הראשונים לשמוע על קולקציות חדשות ומבצעים.</p>
+  <form onsubmit="event.preventDefault();toast('נרשמת בהצלחה! קוד ההנחה בדרך למייל 🎉');this.reset()">
+    <input type="email" required placeholder="כתובת אימייל">
+    <button class="btn btn-dark">הצטרפות</button>
+  </form>
+</div></section>
+
+<footer id="footer">
+  <div class="wrap fgrid">
+    <div>
+      <div class="logo">בית התכשיטנים</div>
+      <p style="margin-top:10px;max-width:280px">שעונים, תכשיטים ואקססוריז לנשים ולגברים, עם שירות אישי ואחריות מלאה.</p>
+      <p style="margin-top:12px">📞 03-000-0000 · 💬 וואטסאפ<br>✉️ hello@beit-hatachshitanim.co.il</p>
+      <div class="social">
+        <a href="#" aria-label="אינסטגרם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="פייסבוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v7h4v-7h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></a>
+        <a href="#" aria-label="טיקטוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.7 3.7 4 4v3.2c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6v3.3a2.7 2.7 0 1 0 2.7 2.7V3H16z"/></svg></a>
+      </div>
+    </div>
+    <div><h4>מידע כללי</h4><ul><li><a href="#">אודות</a></li><li><a href="#">צור קשר</a></li><li><a href="#">משלוחים</a></li><li><a href="#">החזרות והחלפות</a></li><li><a href="#">תקנון האתר</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li></ul></div>
+    <div><h4>לנשים</h4><ul id="fWomen"></ul></div>
+    <div><h4>לגברים</h4><ul id="fMen"></ul></div>
+    <div><h4>שעות פעילות</h4><ul><li>א׳–ה׳: 10:00–19:00</li><li>ו׳ וערבי חג: 9:00–14:00</li><li>שבת: סגור</li></ul></div>
+  </div>
+  <div class="wrap legal">
+    <span>© 2026 בית התכשיטנים. כל הזכויות שמורות.</span>
+    <div class="pay"><span>VISA</span><span>MC</span><span>AMEX</span><span>Bit</span><span>PayPal</span></div>
+  </div>
+</footer>
+
+<a class="wa" href="#" aria-label="צ׳אט בוואטסאפ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+
+<div class="scrim" id="scrim" onclick="toggleCart(false);toggleMnav(false)"></div>
+
+<aside class="drawer" id="drawer" aria-label="סל קניות">
+  <header><h3>סל הקניות</h3><button class="icon-btn" onclick="toggleCart(false)" aria-label="סגירה">✕</button></header>
+  <div class="lines" id="lines"></div>
+  <footer>
+    <div class="ship-bar" id="shipBar"></div>
+    <div class="total"><span>סה״כ</span><span id="total">₪0</span></div>
+    <button class="btn btn-dark" onclick="toast('זה אב-טיפוס: התשלום יחובר בשלב החנות האמיתית')">לתשלום מאובטח</button>
+  </footer>
+</aside>
+
+<aside class="mnav" id="mnav" aria-label="תפריט">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <div class="logo" style="font-size:24px">בית התכשיטנים</div>
+    <button class="icon-btn" onclick="toggleMnav(false)" aria-label="סגירה">✕</button>
+  </div>
+  <div id="mnavBody"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- DATA ---------- */
+const ANNOUNCE = ["משלוח חינם בהזמנה מעל ₪299","החזרה קלה תוך 14 יום","עד 3 תשלומים ללא ריבית","אריזת מתנה חינם בכל הזמנה","10% הנחה בהצטרפות למועדון"];
+
+const NAV = [
+  {key:"women", label:"לנשים", cols:[
+    {h:"שעונים", items:["שעונים קלאסיים","שעונים חכמים","שעוני רוז גולד","שעוני עור"]},
+    {h:"תכשיטים", items:["שרשראות","עגילים","צמידים","טבעות"]},
+    {h:"אקססוריז", items:["תיקים","ארנקים","צעיפים"]}], promo:{img:"img/watch-rose.jpg",t:"חדש: קולקציית רוז גולד"}},
+  {key:"men", label:"לגברים", cols:[
+    {h:"שעונים", items:["שעונים קלאסיים","שעונים חכמים","שעוני ספורט"]},
+    {h:"אקססוריז", items:["ארנקים","כובעים","צמידים לגבר"]},
+    {h:"מתנות", items:["מתנות עד ₪200","מתנות עד ₪500","מארזי מתנה"]}], promo:{img:"img/wallet.jpg",t:"ארנקי עור בעבודת יד"}},
+  {key:"watches", label:"שעונים", cols:[
+    {h:"לפי סוג", items:["אנלוגי","חכם","כרונוגרף"]},
+    {h:"לפי רצועה", items:["עור","מתכת","סיליקון"]},
+    {h:"לפי מחיר", items:["עד ₪500","₪500–₪1,000","מעל ₪1,000"]}], promo:{img:"img/watch-white.jpg",t:"עד 30% הנחה"}},
+  {key:"jewelry", label:"תכשיטים", cols:[
+    {h:"סוג", items:["שרשראות","עגילים","צמידים","טבעות"]},
+    {h:"חומר", items:["כסף 925","ציפוי זהב","פנינים"]},
+    {h:"מיוחדים", items:["תכשיטים עם חריטה","מארזי מתנה"]}], promo:{img:"img/ring.jpg",t:"טבעות לכל רגע"}},
+  {key:"bags", label:"תיקים וארנקים"},
+  {key:"accessories", label:"כובעים וצעיפים"},
+  {key:"home", label:"שעוני קיר"},
+  {key:"sale", label:"מבצעים", cls:"sale"}
+];
+
+const CATS = [
+  {key:"watches",label:"שעונים",img:"img/watch-rose.jpg"},
+  {key:"jewelry",label:"תכשיטים",img:"img/necklace-moon.jpg"},
+  {key:"bags",label:"תיקים",img:"img/bag-pink.jpg"},
+  {key:"wallets",label:"ארנקים",img:"img/wallet.jpg"},
+  {key:"accessories",label:"כובעים וצעיפים",img:"img/cap.jpg"},
+  {key:"home",label:"שעוני קיר",img:"img/wall-clock.jpg"}
+];
+
+// gender: women / men / unisex · stock: number in stock
+const P = [
+  {id:1, name:"שעון מינימל רוז", brand:"ATELIER", cat:"watches", g:"women", img:"img/watch-rose.jpg", spec:"קוטר 34 מ״מ · רצועת עור", price:690, was:890, stock:4, best:1},
+  {id:2, name:"שעון חכם ספורט", brand:"TECH", cat:"watches", g:"unisex", img:"img/watch-smart.jpg", spec:"44 מ״מ · עמיד במים", price:899, was:1190, stock:12, best:1},
+  {id:3, name:"שעון לבן נורדי", brand:"ATELIER", cat:"watches", g:"unisex", img:"img/watch-white.jpg", spec:"40 מ״מ · רצועת סיליקון", price:540, was:720, stock:2, best:1},
+  {id:4, name:"שרשרת סהר וטורקיז", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/necklace-moon.jpg", spec:"ציפוי זהב 14K · שכבתית", price:320, stock:9, best:1, isNew:1},
+  {id:5, name:"עגילי חישוק קלועים", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/hoops-gold.jpg", spec:"ציפוי זהב · 3 ס״מ", price:240, stock:15, best:1, isNew:1},
+  {id:6, name:"טבעת הילה", brand:"FINE", cat:"jewelry", g:"women", img:"img/ring.jpg", spec:"כסף 925 · זירקונים", price:460, was:540, stock:5, best:1},
+  {id:7, name:"צמיד פייזלי", brand:"FINE", cat:"jewelry", g:"women", img:"img/bracelet-gold.jpg", spec:"ציפוי זהב · זירקונים", price:380, stock:7},
+  {id:8, name:"עגילי ספיר וינטג׳", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/earrings-blue.jpg", spec:"אבן כחולה · ציפוי רודיום", price:290, was:360, stock:3},
+  {id:9, name:"מחרוזת פנינים קלאסית", brand:"FINE", cat:"jewelry", g:"women", img:"img/pearls.jpg", spec:"פניני מים מתוקים · 45 ס״מ", price:780, stock:6},
+  {id:10, name:"תיק צד שברון", brand:"BAGS", cat:"bags", g:"women", img:"img/bag-pink.jpg", spec:"עור · רצועת שרשרת", price:590, was:740, stock:8, best:1},
+  {id:11, name:"תיק קרוקו בורדו", brand:"BAGS", cat:"bags", g:"women", img:"img/bag-croco.jpg", spec:"עור בהטבעת קרוקו", price:650, stock:4, isNew:1},
+  {id:12, name:"ארנק עור קלאסי", brand:"LEATHER", cat:"wallets", g:"men", img:"img/wallet.jpg", spec:"עור בקר · 8 כרטיסים", price:220, was:280, stock:20, best:1},
+  {id:13, name:"כובע וינטג׳ אפור", brand:"BASICS", cat:"accessories", g:"men", img:"img/cap.jpg", spec:"כותנה שטופה · מתכוונן", price:120, stock:25, best:1},
+  {id:14, name:"צעיף משבצות צמר", brand:"BASICS", cat:"accessories", g:"unisex", img:"img/scarf.jpg", spec:"תערובת צמר · 180 ס״מ", price:190, was:240, stock:10},
+  {id:15, name:"שעון קיר נורדי", brand:"HOME", cat:"home", g:"unisex", img:"img/wall-clock.jpg", spec:"קוטר 30 ס״מ · מנגנון שקט", price:260, stock:11}
+];
+
+const FREE_SHIP = 299;
+const ils = n => "₪" + n.toLocaleString("he-IL");
+const $ = s => document.querySelector(s);
+const off = p => p.was ? Math.round((1 - p.price / p.was) * 100) : 0;
+const store = {get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+let cart = store.get("luma-cart", {});
+let favs = new Set(store.get("luma-favs", []));
+
+/* ---------- RENDER ---------- */
+$("#track").innerHTML = [...ANNOUNCE, ...ANNOUNCE].map(t => `<span>${t}</span>`).join("");
+
+$("#desktopNav").innerHTML = "<ul>" + NAV.map(n => `<li>
+  <a href="#shop" class="${n.cls||""}" onclick="filterCat('${n.key}')">${n.label}</a>
+  ${n.cols ? `<div class="mega"><div class="wrap">${n.cols.map(c => `<div><h4>${c.h}</h4><ul>${c.items.map(i => `<li><a href="#shop" onclick="filterCat('${n.key}')">${i}</a></li>`).join("")}</ul></div>`).join("")}
+    <a class="promo" href="#shop" onclick="filterCat('${n.key}')"><img src="${n.promo.img}" alt=""><span>${n.promo.t}</span></a></div></div>` : ""}
+</li>`).join("") + "</ul>";
+
+$("#mnavBody").innerHTML = NAV.map(n => n.cols
+  ? `<details><summary>${n.label}</summary><div>${n.cols.flatMap(c => c.items).map(i => `<a href="#shop" onclick="filterCat('${n.key}');toggleMnav(false)">${i}</a>`).join("")}</div></details>`
+  : `<details><summary onclick="filterCat('${n.key}');toggleMnav(false);location.hash='shop'" style="${n.cls?'color:var(--sale)':''}">${n.label}</summary></details>`).join("");
+
+$("#catGrid").innerHTML = CATS.map(c => `<a class="cat" href="#shop" onclick="filterCat('${c.key}')"><div class="ph"><img src="${c.img}" alt="" loading="lazy"></div><b>${c.label}</b></a>`).join("");
+
+const footLinks = (g) => [["שעונים","watches"],["תכשיטים","jewelry"],[g==="women"?"תיקים":"ארנקים", g==="women"?"bags":"wallets"],["מבצעים","sale"]]
+  .map(([l,k]) => `<li><a href="#shop" onclick="filterCat('${k}')">${l}</a></li>`).join("");
+$("#fWomen").innerHTML = footLinks("women");
+$("#fMen").innerHTML = footLinks("men");
+
+function card(p){
+  const d = off(p);
+  return `<article class="card">
+    <div class="ph">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      ${d ? `<span class="tag off">-${d}%</span>` : p.isNew ? `<span class="tag">חדש</span>` : ""}
+      <button class="fav ${favs.has(p.id)?"on":""}" aria-label="הוספה למועדפים" onclick="toggleFav(${p.id},this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></button>
+      <button class="quick" onclick="addToCart(${p.id})">הוספה לסל +</button>
+    </div>
+    <div class="info">
+      <span class="brand">${p.brand}</span>
+      <span class="name">${p.name}</span>
+      <span class="spec">${p.spec}</span>
+      <div class="price">${d ? `<b class="red">${ils(p.price)}</b><s>${ils(p.was)}</s>` : `<b>${ils(p.price)}</b>`}</div>
+      <span class="stock ${p.stock<=4?"low":""}">${p.stock<=4 ? `נותרו ${p.stock} יחידות בלבד` : "✓ במלאי · נשלח תוך 24 שעות"}</span>
+    </div>
+  </article>`;
+}
+
+function setBest(g, el){
+  document.querySelectorAll('[data-g]').forEach(t => t.classList.toggle("on", t === el));
+  const list = P.filter(p => p.best && (p.g === g || p.g === "unisex"));
+  $("#bestRail").innerHTML = list.map(card).join("");
+}
+
+const SHOP_TABS = [["all","הכל"],["watches","שעונים"],["jewelry","תכשיטים"],["bags","תיקים"],["wallets","ארנקים"],["accessories","כובעים וצעיפים"],["home","שעוני קיר"],["sale","מבצעים"]];
+const LABELS = Object.fromEntries([...SHOP_TABS, ["women","לנשים"],["men","לגברים"]]);
+let currentCat = "all", query = "";
+
+function filterCat(k){ currentCat = k; query = ""; document.querySelectorAll('input[type=search]').forEach(i => i.value = ""); renderShop(); }
+function doSearch(q){ query = q.trim(); currentCat = "all"; renderShop(); if (query) $("#shop").scrollIntoView({behavior:"smooth"}); }
+
+function renderShop(){
+  $("#shopTabs").innerHTML = SHOP_TABS.map(([k,l]) => `<button class="tab ${k===currentCat?"on":""}" onclick="filterCat('${k}')">${l}</button>`).join("");
+  let list = P.filter(p => {
+    if (currentCat === "sale") return p.was;
+    if (currentCat === "women" || currentCat === "men") return p.g === currentCat || p.g === "unisex";
+    return currentCat === "all" || p.cat === currentCat;
+  });
+  if (query) list = list.filter(p => (p.name + p.brand + p.spec + (LABELS[p.cat]||"")).toLowerCase().includes(query.toLowerCase()));
+  $("#shopTitle").innerHTML = query ? `תוצאות עבור <em>"${query.replace(/</g,"&lt;")}"</em>` : currentCat === "all" ? "כל <em>המוצרים</em>" : `<em>${LABELS[currentCat]}</em>`;
+  $("#shopGrid").innerHTML = list.length ? list.map(card).join("") : `<div class="empty">לא נמצאו מוצרים. נסו חיפוש אחר 🙂</div>`;
+}
+
+/* ---------- CART ---------- */
+function addToCart(id){ cart[id] = (cart[id]||0) + 1; saveCart(); toast("נוסף לסל ✓"); toggleCart(true); }
+function setQty(id, d){ cart[id] = (cart[id]||0) + d; if (cart[id] <= 0) delete cart[id]; saveCart(); }
+function saveCart(){ store.set("luma-cart", cart); renderCart(); }
+function renderCart(){
+  const items = Object.entries(cart).map(([id,q]) => ({p:P.find(x => x.id == id), q})).filter(x => x.p);
+  const count = items.reduce((s,x) => s + x.q, 0), sum = items.reduce((s,x) => s + x.q * x.p.price, 0);
+  $("#cartCount").hidden = !count; $("#cartCount").textContent = count;
+  $("#lines").innerHTML = items.length ? items.map(({p,q}) => `<div class="line">
+    <img src="${p.img}" alt="">
+    <div><div class="name">${p.name}</div><div class="spec">${p.spec}</div>
+      <div class="qty"><button onclick="setQty(${p.id},1)" aria-label="הוספה">+</button><span>${q}</span><button onclick="setQty(${p.id},-1)" aria-label="הפחתה">−</button></div></div>
+    <div style="text-align:left"><b>${ils(p.price*q)}</b><br><button class="rm" onclick="setQty(${p.id},-${q})">הסרה</button></div>
+  </div>`).join("") : `<div class="empty">הסל ריק כרגע</div>`;
+  const left = FREE_SHIP - sum;
+  $("#shipBar").innerHTML = (left > 0 ? `עוד <b>${ils(left)}</b> למשלוח חינם 🚚` : `<b>מגיע לך משלוח חינם! 🎉</b>`) + `<div class="bar"><i style="width:${Math.min(100, sum/FREE_SHIP*100)}%"></i></div>`;
+  $("#total").textContent = ils(sum);
+}
+function toggleCart(on){ $("#drawer").classList.toggle("on", on); $("#scrim").classList.toggle("on", on); }
+function toggleMnav(on){ $("#mnav").classList.toggle("on", on); $("#scrim").classList.toggle("on", on); }
+
+function toggleFav(id, el){
+  favs.has(id) ? favs.delete(id) : favs.add(id);
+  el.classList.toggle("on"); store.set("luma-favs", [...favs]); renderFavCount();
+}
+function renderFavCount(){ $("#favCount").hidden = !favs.size; $("#favCount").textContent = favs.size; }
+function showFavs(){
+  if (!favs.size) return toast("עדיין לא סימנת מועדפים ♡");
+  $("#shopTitle").innerHTML = "<em>המועדפים</em> שלי";
+  $("#shopGrid").innerHTML = P.filter(p => favs.has(p.id)).map(card).join("");
+  $("#shop").scrollIntoView({behavior:"smooth"});
+}
+
+let tt; function toast(m){ const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2200); }
+
+/* ---------- COUNTDOWN (to end of current week) ---------- */
+function tick(){
+  const now = new Date(), end = new Date(now); end.setDate(now.getDate() + (6 - now.getDay())); end.setHours(23,59,59,0);
+  let s = Math.max(0, (end - now) / 1000|0);
+  const parts = [[s/86400|0,"ימים"],[(s%=86400)/3600|0,"שעות"],[(s%=3600)/60|0,"דקות"],[s%60,"שניות"]];
+  $("#countdown").innerHTML = parts.map(([v,l]) => `<div><b>${String(v).padStart(2,"0")}</b><small>${l}</small></div>`).join("");
+}
+tick(); setInterval(tick, 1000);
+
+document.addEventListener("keydown", e => { if (e.key === "Escape") { toggleCart(false); toggleMnav(false); } });
+
+setBest("women", document.querySelector('[data-g=women]'));
+renderShop(); renderCart(); renderFavCount();
+</script>
+</body>
+</html>
