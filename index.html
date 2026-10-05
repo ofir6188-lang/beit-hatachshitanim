@@ -343,7 +343,7 @@ footer .logo{text-align:right;color:#fff}
 <!-- SERVICES -->
 <section class="block" style="padding-top:0"><div class="wrap service">
   <div class="svc"><img src="img/wall-clock.jpg" alt=""><div class="t">
-    <h3>מעבדת תיקונים</h3><p>החלפת סוללה, רצועה ותיקון שעונים ותכשיטים, בידי צורף ושען מוסמכים.</p><a href="#">לפרטים ותיאום ←</a></div></div>
+    <h3>מעבדת תיקונים</h3><p>שען וצורף במקום: סוללות, רצועות, הלחמות, התאמת טבעות וליטוש. רוב התיקונים מתבצעים בזמן שאתם מחכים.</p><a href="repair.html">לכל שירותי המעבדה ←</a></div></div>
   <div class="svc"><img src="img/pearls.jpg" alt=""><div class="t">
     <h3>אריזת מתנה חינם</h3><p>כל הזמנה מגיעה בקופסת מתנה ממותגת, עם כרטיס ברכה אישי לבחירתכם.</p><a href="#shop" onclick="filterCat('all')">לבחירת מתנה ←</a></div></div>
 </div></section>
@@ -392,7 +392,7 @@ footer .logo{text-align:right;color:#fff}
         <a href="#" id="ttLink" target="_blank" rel="noopener" aria-label="טיקטוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.7 3.7 4 4v3.2c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6v3.3a2.7 2.7 0 1 0 2.7 2.7V3H16z"/></svg></a>
       </div>
     </div>
-    <div><h4>מידע כללי</h4><ul><li><a href="#">אודות</a></li><li><a href="#">צור קשר</a></li><li><a href="#">משלוחים</a></li><li><a href="#">החזרות והחלפות</a></li><li><a href="#">תקנון האתר</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li></ul></div>
+    <div><h4>מידע כללי</h4><ul><li><a href="#">אודות</a></li><li><a href="#">צור קשר</a></li><li><a href="repair.html">מעבדת תיקונים</a></li><li><a href="#">משלוחים</a></li><li><a href="#">החזרות והחלפות</a></li><li><a href="#">תקנון האתר</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li></ul></div>
     <div><h4>לנשים</h4><ul id="fWomen"></ul></div>
     <div><h4>לגברים</h4><ul id="fMen"></ul></div>
     <div><h4>שעות פעילות</h4><ul id="footHours"></ul></div>
@@ -450,6 +450,7 @@ const NAV = [
   {key:"bags", label:"תיקים וארנקים"},
   {key:"accessories", label:"כובעים וצעיפים"},
   {key:"home", label:"שעוני קיר"},
+  {key:"repair", label:"מעבדת תיקונים", href:"repair.html"},
   {key:"sale", label:"מבצעים", cls:"sale"}
 ];
 
@@ -475,13 +476,14 @@ let favs = new Set(store.get("luma-favs", []));
 
 /* ---------- RENDER ---------- */
 $("#desktopNav").innerHTML = "<ul>" + NAV.map(n => `<li>
-  <a href="#shop" class="${n.cls||""}" onclick="filterCat('${n.key}')">${n.label}</a>
+  ${n.href ? `<a href="${n.href}">${n.label}</a>` : `<a href="#shop" class="${n.cls||""}" onclick="filterCat('${n.key}')">${n.label}</a>`}
   ${n.cols ? `<div class="mega"><div class="wrap">${n.cols.map(c => `<div><h4>${c.h}</h4><ul>${c.items.map(i => `<li><a href="#shop" onclick="filterCat('${n.key}')">${i}</a></li>`).join("")}</ul></div>`).join("")}
     <a class="promo" href="#shop" onclick="filterCat('${n.key}')"><img src="${n.promo.img}" alt=""><span>${n.promo.t}</span></a></div></div>` : ""}
 </li>`).join("") + "</ul>";
 
 $("#mnavBody").innerHTML = NAV.map(n => n.cols
   ? `<details><summary>${n.label}</summary><div>${n.cols.flatMap(c => c.items).map(i => `<a href="#shop" onclick="filterCat('${n.key}');toggleMnav(false)">${i}</a>`).join("")}</div></details>`
+  : n.href ? `<details><summary onclick="location.href='${n.href}'">${n.label}</summary></details>`
   : `<details><summary onclick="filterCat('${n.key}');toggleMnav(false);location.hash='shop'" style="${n.cls?'color:var(--sale)':''}">${n.label}</summary></details>`).join("");
 
 $("#catGrid").innerHTML = CATS.map(c => `<a class="cat" href="#shop" onclick="filterCat('${c.key}')"><div class="ph"><img src="${c.img}" alt="" loading="lazy"></div><b>${c.label}</b></a>`).join("");

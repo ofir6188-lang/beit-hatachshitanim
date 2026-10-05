@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מעבדת תיקונים לשעונים ותכשיטים בחולון — בית התכשיטנים</title>
+<meta name="description" content="מעבדת שען וצורף בחולון: החלפת סוללה, זכוכית ורצועה, תיקון מנגנונים, הלחמת שרשראות, הקטנת טבעות, ליטוש וציפוי. רוב התיקונים מתבצעים במקום.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--soft:#f6f3ee;--ink:#151515;--muted:#6b6660;--line:#e7e2da;--gold:#a8834f;--radius:12px;--wrap:1180px}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{font-family:Heebo,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Frank Ruhl Libre",serif;line-height:1.15}
+.eyebrow{font-size:13px;letter-spacing:3px;color:var(--gold);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;border-radius:999px;font-weight:700;font-size:15px;transition:.2s}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:var(--gold)}
+.btn-wa{background:#25d366;color:#fff}.btn-wa:hover{filter:brightness(.93)}
+.btn-line{border:1.5px solid var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+.btn svg{width:20px;height:20px}
+
+header{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{font-family:"Frank Ruhl Libre",serif;font-size:24px;font-weight:700;white-space:nowrap}
+.logo small{display:block;font-family:Heebo;font-size:9px;letter-spacing:3px;color:var(--gold);font-weight:500;margin-top:-4px}
+header nav{display:flex;gap:6px;align-items:center}
+header nav a.lnk{padding:8px 12px;font-size:15px;font-weight:500}
+header nav a.lnk:hover{color:var(--gold)}
+header .btn{height:40px;padding:0 16px;font-size:14px}
+
+.hero{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding-top:64px;padding-bottom:64px}
+.hero h1{font-size:clamp(34px,5vw,58px);margin:12px 0 16px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:#c9c4bc;font-size:17px;max-width:520px}
+.hero .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hero .btn-line{border-color:#fff;color:#fff}.hero .btn-line:hover{background:#fff;color:var(--ink)}
+.hero .pics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hero .pics img{border-radius:14px;aspect-ratio:3/4;object-fit:cover;width:100%}
+.hero .pics img:last-child{margin-top:40px}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:30px;font-size:14px;color:#c9c4bc}
+.facts b{display:block;font-size:22px;color:#fff;font-family:"Frank Ruhl Libre",serif}
+
+section.block{padding:72px 0}
+.head{text-align:center;max-width:640px;margin:0 auto 36px}
+.head h2{font-size:clamp(28px,3.4vw,40px);margin:8px 0}
+.head p{color:var(--muted)}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.svc-card{background:var(--soft);border-radius:18px;padding:28px}
+.svc-card h3{font-size:26px;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.svc-card h3 svg{width:34px;height:34px;color:var(--gold);flex:none}
+.svc-card>p{color:var(--muted);margin-bottom:16px}
+.svc-list{list-style:none;display:grid;gap:8px}
+.svc-list li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.svc-list b{font-size:15px;font-weight:700;display:block}
+.svc-list small{color:var(--muted);font-size:13px}
+.ask{flex:none;font-size:13px;font-weight:700;color:var(--gold);border:1.5px solid var(--gold);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.ask:hover{background:var(--gold);color:#fff}
+.onsite{display:inline-block;font-size:11px;font-weight:700;background:#e8f3ec;color:#2e7d4f;border-radius:999px;padding:1px 8px;margin-inline-start:6px;vertical-align:2px}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
+.step{border-top:2px solid var(--ink);padding-top:16px}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:"Frank Ruhl Libre",serif;font-size:34px;color:var(--gold);display:block;line-height:1;margin-bottom:8px}
+.step h3{font-size:20px;margin-bottom:4px}
+.step p{color:var(--muted);font-size:15px}
+
+.why{background:var(--soft)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.why-grid div{background:#fff;border-radius:16px;padding:22px;border:1px solid var(--line)}
+.why-grid svg{width:30px;height:30px;color:var(--gold);margin-bottom:10px}
+.why-grid b{display:block;font-size:17px;margin-bottom:4px}
+.why-grid p{color:var(--muted);font-size:14px}
+
+.faq{max-width:780px;margin:0 auto}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:17px;display:flex;justify-content:space-between;gap:16px}
+.faq summary::after{content:"+";color:var(--gold);font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"−"}
+.faq details p{color:var(--muted);padding-bottom:18px}
+
+.visit .wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+.visit-card{background:var(--ink);color:#fff;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:14px}
+.visit-card h2{font-size:32px}
+.visit-card .row{display:flex;gap:12px;align-items:flex-start;color:#d6d1c9}
+.visit-card .row svg{width:22px;height:22px;color:var(--gold);flex:none;margin-top:2px}
+.visit-card .row b{color:#fff;display:block}
+.visit-card .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:10px}
+.visit-card .btn-line{border-color:#fff;color:#fff}.visit-card .btn-line:hover{background:#fff;color:var(--ink)}
+.map{border-radius:18px;overflow:hidden;min-height:340px;background:var(--soft);border:1px solid var(--line)}
+.map iframe{width:100%;height:100%;min-height:340px;border:0;display:block}
+
+footer{border-top:1px solid var(--line);padding:24px 0;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a:hover{color:var(--ink)}
+
+.wa-float{position:fixed;bottom:20px;left:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.wa-float svg{width:30px;height:30px}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:40px;padding-bottom:48px}
+  .hero .pics{order:-1}
+  .hero .pics img{aspect-ratio:4/3}
+  .hero .pics img:last-child{margin-top:0}
+  .cols,.visit .wrap{grid-template-columns:1fr}
+  .steps,.why-grid{grid-template-columns:1fr 1fr}
+  header nav a.lnk{display:none}
+  section.block{padding:52px 0}
+}
+@media (max-width:520px){
+  .steps,.why-grid{grid-template-columns:1fr}
+  .svc-card{padding:20px 14px}
+  .svc-list li{flex-direction:column;align-items:flex-start}
+  header .btn span{display:none}
+}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a href="./" class="logo">בית התכשיטנים<small>THE JEWELERS HOUSE</small></a>
+  <nav>
+    <a class="lnk" href="./">לחנות</a>
+    <a class="lnk" href="#services">שירותים</a>
+    <a class="lnk" href="#faq">שאלות נפוצות</a>
+    <a class="lnk" href="#visit">הגעה</a>
+    <a class="btn btn-dark tel-link" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="tel-text">התקשרו</span></a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <div class="eyebrow">מעבדת שען וצורף · חולון</div>
+    <h1>מתקנים את מה<br>שיקר <em>לכם</em>.</h1>
+    <p>במעבדה שלנו עובדים שען וצורף מקצועיים, תחת קורת גג אחת. אנחנו מחזירים לחיים שעונים ותכשיטים מכל סוג ומכל מותג, גם כאלה שנקנו במקום אחר. את רוב התיקונים אנחנו מבצעים במקום, בזמן שאתם מחכים.</p>
+    <div class="btns">
+      <a class="btn btn-wa wa-link" href="#" target="_blank" rel="noopener" data-msg="שלום, אשמח לקבל הצעת מחיר לתיקון. מצרף/ת תמונה:"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>שלחו תמונה וקבלו הצעת מחיר</a>
+      <a class="btn btn-line" href="#services">לרשימת השירותים</a>
+    </div>
+    <div class="facts">
+      <div><b>במקום</b>רוב התיקונים</div>
+      <div><b>כל המותגים</b>גם אם לא נקנה אצלנו</div>
+      <div><b>הצעת מחיר</b>לפני כל תיקון</div>
+    </div>
+  </div>
+  <div class="pics">
+    <img src="img/watch-rose.jpg" alt="שעון בתיקון">
+    <img src="img/ring.jpg" alt="טבעת לאחר ליטוש">
+  </div>
+</div></section>
+
+<section class="block" id="services"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow">מה אנחנו עושים</div>
+    <h2>השירותים במעבדה</h2>
+    <p>לא מצאתם את התיקון שלכם ברשימה? שלחו לנו תמונה בוואטסאפ ונבדוק.</p>
+  </div>
+  <div class="cols">
+    <div class="svc-card">
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 1.5M9 3h6l-.5 3h-5zM9 21h6l-.5-3h-5z"/></svg>תיקון שעונים</h3>
+      <p>לשעונים אנלוגיים, אוטומטיים ודיגיטליים.</p>
+      <ul class="svc-list" id="watchList"></ul>
+    </div>
+    <div class="svc-card">
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l3 5-9 13L3 8z"/><path d="M3 8h18M9 3l3 18M15 3l-3 18"/></svg>תיקון תכשיטים</h3>
+      <p>לזהב, כסף, ציפויים ותכשיטי אופנה.</p>
+      <ul class="svc-list" id="jewelList"></ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="head"><div class="eyebrow">איך זה עובד</div><h2>ארבעה צעדים פשוטים</h2></div>
+  <div class="steps">
+    <div class="step"><h3>מביאים או שולחים תמונה</h3><p>קופצים למעבדה, או שולחים לנו תמונה בוואטסאפ כדי לקבל הערכה מראש.</p></div>
+    <div class="step"><h3>בדיקה והצעת מחיר</h3><p>השען או הצורף בודקים את הפריט ומסבירים בדיוק מה צריך לעשות ובכמה. בלי הפתעות.</p></div>
+    <div class="step"><h3>תיקון</h3><p>את רוב העבודות אנחנו מסיימים במקום. תיקון מורכב יותר מקבל זמן משוער מראש.</p></div>
+    <div class="step"><h3>איסוף</h3><p>הפריט נבדק שוב לפני שהוא חוזר אליכם. כשהוא מוכן, אנחנו מעדכנים אתכם בהודעה.</p></div>
+  </div>
+</div></section>
+
+<section class="block why"><div class="wrap">
+  <div class="head"><div class="eyebrow">למה אצלנו</div><h2>מעבדה של בית תכשיטים</h2></div>
+  <div class="why-grid">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><b>אנשי מקצוע</b><p>שען וצורף שעובדים במעבדה עצמה. התיקון לא נשלח לקבלן חיצוני.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>מהיר</b><p>החלפת סוללה, רצועה או התאמת מידה בדרך כלל מסתיימות בזמן שאתם מחכים.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h10"/></svg><b>מחיר שקוף</b><p>אתם מקבלים הצעת מחיר לפני שמתחילים, ושום עבודה לא מתבצעת בלי אישור שלכם.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><b>חלקים איכותיים</b><p>אנחנו משתמשים בסוללות, זכוכיות וחלקי חילוף שמתאימים לדגם של השעון.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="faq"><div class="wrap">
+  <div class="head"><div class="eyebrow">שאלות נפוצות</div><h2>לפני שמגיעים</h2></div>
+  <div class="faq">
+    <details><summary>אתם מתקנים גם שעונים ותכשיטים שלא נקנו אצלכם?</summary><p>בהחלט. המעבדה מקבלת שעונים ותכשיטים מכל מותג ומכל מקום רכישה.</p></details>
+    <details><summary>כמה זמן לוקחת החלפת סוללה?</summary><p>ברוב השעונים ההחלפה לוקחת כמה דקות, ואתם יכולים לחכות במקום. יש שעונים עם מכסה מיוחד או אטימות למים שדורשים יותר זמן, ואז נעדכן אתכם מראש.</p></details>
+    <details><summary>אפשר לקבל הערכת מחיר בלי להגיע?</summary><p>כן. שלחו לנו בוואטסאפ תמונה ברורה של הפריט ותיאור קצר של הבעיה, ונחזור אליכם עם הערכה. את המחיר הסופי ניתן אחרי שנראה את הפריט במעבדה.</p></details>
+    <details><summary>מה לגבי שעון שעדיין באחריות של היצרן?</summary><p>אם השעון עדיין באחריות יצרן, כדאי לבדוק קודם עם היבואן, כי פתיחה במעבדה אחרת עלולה לבטל את האחריות. נשמח לייעץ לכם לפני שמתחילים.</p></details>
+    <details><summary>אפשר להקטין או להגדיל כל טבעת?</summary><p>את רוב הטבעות מזהב ומכסף אפשר להתאים. טבעות עם אבנים מסביב לכל ההיקף, או טבעות מחומרים כמו טיטניום וטונגסטן, צריך לבדוק קודם במעבדה.</p></details>
+    <details><summary>צריך לתאם תור?</summary><p>לתיקונים קטנים אין צורך בתור, פשוט מגיעים בשעות הפעילות. לעבודות גדולות כדאי לשלוח הודעה מראש.</p></details>
+  </div>
+</div></section>
+
+<section class="block visit" id="visit" style="padding-top:0"><div class="wrap">
+  <div class="visit-card">
+    <div class="eyebrow">בואו לבקר</div>
+    <h2>המעבדה בחולון</h2>
+    <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><div><b>כתובת</b><span id="vAddress"></span></div></div>
+    <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>שעות פעילות</b><span id="vHours"></span></div></div>
+    <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><div><b>טלפון</b><a class="tel-link tel-text" href="#"></a></div></div>
+    <div class="btns">
+      <a class="btn btn-wa wa-link" href="#" target="_blank" rel="noopener" data-msg="שלום, יש לי שאלה לגבי תיקון:">וואטסאפ</a>
+      <a class="btn btn-line" id="navLink" href="#" target="_blank" rel="noopener">ניווט למעבדה</a>
+    </div>
+  </div>
+  <div class="map" id="map"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 בית התכשיטנים · מעבדת תיקונים</span>
+  <span><a href="./">לחנות</a> · <a href="./#footer">צור קשר</a></span>
+</div></footer>
+
+<a class="wa-float wa-link" href="#" target="_blank" rel="noopener" aria-label="וואטסאפ" data-msg="שלום, אשמח לקבל הצעת מחיר לתיקון:"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+
+<script>
+const WATCH = [
+  ["החלפת סוללה", "לכל סוגי השעונים, כולל בדיקת המנגנון", 1],
+  ["החלפת זכוכית", "זכוכית מינרלית, ספיר או אקרילית, לפי הדגם", 0],
+  ["החלפת רצועה", "עור, מתכת, סיליקון ובד, במבחר גדול", 1],
+  ["התאמת אורך רצועת מתכת", "הוספה או הוצאה של חוליות", 1],
+  ["חיבור מחוגים וסימנים בחוגה", "מחוג שהשתחרר או סימן שנפל", 0],
+  ["תיקון והחלפת מנגנון", "לשעון שמפגר, נעצר או לא עובד", 0],
+  ["ניקוי וטיפול כללי", "ניקוי קופסה ורצועה, החלפת אטמים", 0],
+  ["החלפת כתר וסוגר", "כתר שבור או אבזם שהתרופף", 0]
+];
+const JEWEL = [
+  ["הלחמת שרשראות וצמידים", "חיבור חוליה שנקרעה, כמעט בלי שיהיה ניכר", 0],
+  ["הקטנה והגדלה של טבעות", "בזהב ובכסף", 0],
+  ["החלפת סוגר", "קרס, טבעת קפיצית או סוגר מגנטי", 1],
+  ["ליטוש וניקוי", "מחזירים לתכשיט את הברק המקורי", 1],
+  ["ציפוי רודיום וזהב", "רענון ציפוי שדהה עם הזמן", 0],
+  ["שיבוץ והחלפת אבנים", "אבן שנפלה, או חיזוק של שיניים רופפות", 0],
+  ["תיקון עגילים", "החלפת נעצים, ווים וסגירות", 1],
+  ["השחלת מחרוזות פנינים", "השחלה מחדש על חוט משי, עם קשר בין הפנינים", 0]
+];
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const row = ([t, d, onsite]) => `<li><div><b>${t}${onsite ? `<span class="onsite">במקום</span>` : ""}</b><small>${d}</small></div>
+  <a class="ask wa-link" href="#" target="_blank" rel="noopener" data-msg="שלום, אשמח לקבל הצעת מחיר ל${t}. מצרף/ת תמונה:">הצעת מחיר</a></li>`;
+document.querySelector("#watchList").innerHTML = WATCH.map(row).join("");
+document.querySelector("#jewelList").innerHTML = JEWEL.map(row).join("");
+
+fetch("data/settings.json?v=" + Date.now()).then(r => r.json()).then(S => {
+  const c = S.contact || {}, h = S.hours || {};
+  const wa = (c.whatsapp || "").replace(/\D/g, "").replace(/^0/, "972");
+  const tel = (c.phone || "").replace(/[^\d+]/g, "");
+  document.querySelectorAll(".wa-link").forEach(a => {
+    if (wa) a.href = `https://wa.me/${wa}?text=${encodeURIComponent(a.dataset.msg || "")}`;
+    else if (tel) { a.href = "tel:" + tel; a.removeAttribute("target"); }   // no WhatsApp yet → call instead
+    else a.hidden = true;
+  });
+  if (!wa) document.querySelectorAll(".wa-float").forEach(a => a.hidden = true);
+  document.querySelectorAll(".tel-link").forEach(a => a.href = "tel:" + tel);
+  document.querySelectorAll("a.tel-text").forEach(a => a.textContent = c.phone || "");
+  document.querySelector("#vAddress").textContent = c.address || "";
+  document.querySelector("#vHours").innerHTML = `א׳–ה׳: ${esc(h.weekdays)}<br>ו׳ וערבי חג: ${esc(h.friday)}<br>שבת: ${esc(h.saturday)}`;
+  const q = encodeURIComponent(c.address || "");
+  document.querySelector("#navLink").href = "https://www.google.com/maps/dir/?api=1&destination=" + q;
+  if (c.address) document.querySelector("#map").innerHTML = `<iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="מפה" src="https://maps.google.com/maps?q=${q}&z=16&output=embed"></iframe>`;
+}).catch(console.error);
+</script>
+</body>
+</html>
