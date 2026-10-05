@@ -12,7 +12,7 @@
     "stock": 4,
     "best": true,
     "isNew": false,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 2,
