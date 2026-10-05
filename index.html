@@ -471,8 +471,8 @@ const ils = n => "₪" + n.toLocaleString("he-IL");
 const $ = s => document.querySelector(s);
 const off = p => p.was ? Math.round((1 - p.price / p.was) * 100) : 0;
 const store = {get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-let cart = store.get("luma-cart", {});
-let favs = new Set(store.get("luma-favs", []));
+let cart = store.get("bt-cart", {});
+let favs = new Set(store.get("bt-favs", []));
 
 /* ---------- RENDER ---------- */
 $("#desktopNav").innerHTML = "<ul>" + NAV.map(n => `<li>
@@ -540,7 +540,7 @@ function renderShop(){
 /* ---------- CART ---------- */
 function addToCart(id){ cart[id] = (cart[id]||0) + 1; saveCart(); toast("נוסף לסל ✓"); toggleCart(true); }
 function setQty(id, d){ cart[id] = (cart[id]||0) + d; if (cart[id] <= 0) delete cart[id]; saveCart(); }
-function saveCart(){ store.set("luma-cart", cart); renderCart(); }
+function saveCart(){ store.set("bt-cart", cart); renderCart(); }
 function renderCart(){
   const items = Object.entries(cart).map(([id,q]) => ({p:P.find(x => x.id == id), q})).filter(x => x.p);
   const count = items.reduce((s,x) => s + x.q, 0), sum = items.reduce((s,x) => s + x.q * x.p.price, 0);
@@ -560,7 +560,7 @@ function toggleMnav(on){ $("#mnav").classList.toggle("on", on); $("#scrim").clas
 
 function toggleFav(id, el){
   favs.has(id) ? favs.delete(id) : favs.add(id);
-  el.classList.toggle("on"); store.set("luma-favs", [...favs]); renderFavCount();
+  el.classList.toggle("on"); store.set("bt-favs", [...favs]); renderFavCount();
 }
 function renderFavCount(){ $("#favCount").hidden = !favs.size; $("#favCount").textContent = favs.size; }
 function showFavs(){
