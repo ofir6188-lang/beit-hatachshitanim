@@ -55,11 +55,6 @@
       "img": "img/wallet.jpg"
     },
     {
-      "key": "accessories",
-      "label": "כובעים וצעיפים",
-      "img": "img/cap.jpg"
-    },
-    {
       "key": "home",
       "label": "שעוני קיר",
       "img": "img/wall-clock.jpg"
