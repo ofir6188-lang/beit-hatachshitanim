@@ -12,7 +12,7 @@
     "stock": 4,
     "best": true,
     "isNew": false,
-    "hidden": true
+    "hidden": false
   },
   {
     "id": 2,
@@ -147,7 +147,7 @@
     "stock": 8,
     "best": true,
     "isNew": false,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 11,
@@ -162,7 +162,7 @@
     "stock": 4,
     "best": false,
     "isNew": true,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 12,
@@ -177,7 +177,7 @@
     "stock": 20,
     "best": true,
     "isNew": false,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 13,
@@ -192,7 +192,7 @@
     "stock": 25,
     "best": true,
     "isNew": false,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 14,
@@ -207,7 +207,7 @@
     "stock": 10,
     "best": false,
     "isNew": false,
-    "hidden": false
+    "hidden": true
   },
   {
     "id": 15,
