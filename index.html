@@ -46,6 +46,7 @@ header.main{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px s
 .icon-btn svg{width:22px;height:22px}
 .badge{position:absolute;top:2px;left:2px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
 .burger{display:none}
+[hidden]{display:none!important}
 .badge[hidden]{display:none}
 body{overflow-x:hidden}
 .hero>*,.sale-banner>*,.service>*{min-width:0}
@@ -260,7 +261,7 @@ footer .logo{text-align:right;color:#fff}
 </div>
 
 <div class="topbar"><div class="wrap">
-  <div>📍 שירות לקוחות: א׳–ה׳ 10:00–19:00 · ו׳ 9:00–14:00</div>
+  <div id="topHours"></div>
   <div style="display:flex;gap:18px"><a href="#">התחברות / הרשמה</a><a href="#">מעקב הזמנה</a><a href="#footer">צור קשר</a></div>
 </div></div>
 
@@ -284,9 +285,9 @@ footer .logo{text-align:right;color:#fff}
 <!-- HERO -->
 <section class="hero">
   <div class="txt">
-    <div class="eyebrow">קולקציית סתיו 2026</div>
-    <h1>הזמן שלך.<br>הסטייל שלך.</h1>
-    <p>שעונים, תכשיטים ואקססוריז שנבחרו בקפידה, עם אחריות מלאה, משלוח מהיר עד הבית והחזרה בלי שאלות.</p>
+    <div class="eyebrow" id="heroEyebrow"></div>
+    <h1 id="heroTitle"></h1>
+    <p id="heroText"></p>
     <div class="btns">
       <a href="#shop" class="btn btn-dark" onclick="filterCat('watches')">לשעונים</a>
       <a href="#shop" class="btn btn-line" onclick="filterCat('jewelry')">לתכשיטים</a>
@@ -302,7 +303,7 @@ footer .logo{text-align:right;color:#fff}
 <!-- TRUST -->
 <div class="trust"><div class="wrap">
   <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>מקור ואחריות מלאה</b><small>כל מוצר עם תעודת אחריות</small></span></div>
-  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><span><b>משלוח חינם מעל ₪299</b><small>עד 1–3 ימי עסקים</small></span></div>
+  <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><span><b id="trustShip">משלוח מהיר</b><small>עד 1–3 ימי עסקים</small></span></div>
   <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/></svg><span><b>החזרה קלה</b><small>14 יום לפי חוק הגנת הצרכן</small></span></div>
   <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span><b>תשלום מאובטח</b><small>הצפנת SSL · עד 3 תשלומים</small></span></div>
 </div></div>
@@ -314,11 +315,11 @@ footer .logo{text-align:right;color:#fff}
 </div></section>
 
 <!-- SALE -->
-<section class="block" style="padding-top:0"><div class="wrap">
+<section class="block" id="saleSection" style="padding-top:0"><div class="wrap">
   <div class="sale-banner">
     <div class="t">
-      <div class="eyebrow">מבצע סוף עונה</div>
-      <h2>עד <span>30%</span> הנחה<br>על מגוון שעונים</h2>
+      <div class="eyebrow" id="saleEyebrow"></div>
+      <h2 id="saleTitle"></h2>
       <p>המבצע מסתיים בעוד:</p>
       <div class="countdown" id="countdown"></div>
       <a href="#shop" class="btn btn-gold" onclick="filterCat('sale')">לכל המבצעים ←</a>
@@ -358,7 +359,7 @@ footer .logo{text-align:right;color:#fff}
 
 <!-- INSTAGRAM -->
 <section class="block insta"><div class="wrap">
-  <div class="head"><h2>עקבו אחרינו <em>@beit.hatachshitanim</em></h2><a href="#">לאינסטגרם ←</a></div>
+  <div class="head"><h2>עקבו אחרינו <em id="igHandle"></em></h2><a href="#" class="ig-link" target="_blank" rel="noopener">לאינסטגרם ←</a></div>
   <div class="insta-grid">
     <a href="#"><img src="img/flatlay.jpg" alt="" loading="lazy"></a>
     <a href="#"><img src="img/watch-smart.jpg" alt="" loading="lazy"></a>
@@ -384,17 +385,17 @@ footer .logo{text-align:right;color:#fff}
     <div>
       <div class="logo">בית התכשיטנים</div>
       <p style="margin-top:10px;max-width:280px">שעונים, תכשיטים ואקססוריז לנשים ולגברים, עם שירות אישי ואחריות מלאה.</p>
-      <p style="margin-top:12px">📞 03-000-0000 · 💬 וואטסאפ<br>✉️ hello@beit-hatachshitanim.co.il</p>
+      <p style="margin-top:12px" id="footContact"></p>
       <div class="social">
-        <a href="#" aria-label="אינסטגרם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
-        <a href="#" aria-label="פייסבוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v7h4v-7h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></a>
-        <a href="#" aria-label="טיקטוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.7 3.7 4 4v3.2c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6v3.3a2.7 2.7 0 1 0 2.7 2.7V3H16z"/></svg></a>
+        <a href="#" class="ig-link" target="_blank" rel="noopener" aria-label="אינסטגרם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" id="fbLink" target="_blank" rel="noopener" aria-label="פייסבוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v7h4v-7h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></a>
+        <a href="#" id="ttLink" target="_blank" rel="noopener" aria-label="טיקטוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.7 3.7 4 4v3.2c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6v3.3a2.7 2.7 0 1 0 2.7 2.7V3H16z"/></svg></a>
       </div>
     </div>
     <div><h4>מידע כללי</h4><ul><li><a href="#">אודות</a></li><li><a href="#">צור קשר</a></li><li><a href="#">משלוחים</a></li><li><a href="#">החזרות והחלפות</a></li><li><a href="#">תקנון האתר</a></li><li><a href="#">מדיניות פרטיות</a></li><li><a href="#">הצהרת נגישות</a></li></ul></div>
     <div><h4>לנשים</h4><ul id="fWomen"></ul></div>
     <div><h4>לגברים</h4><ul id="fMen"></ul></div>
-    <div><h4>שעות פעילות</h4><ul><li>א׳–ה׳: 10:00–19:00</li><li>ו׳ וערבי חג: 9:00–14:00</li><li>שבת: סגור</li></ul></div>
+    <div><h4>שעות פעילות</h4><ul id="footHours"></ul></div>
   </div>
   <div class="wrap legal">
     <span>© 2026 בית התכשיטנים. כל הזכויות שמורות.</span>
@@ -402,7 +403,7 @@ footer .logo{text-align:right;color:#fff}
   </div>
 </footer>
 
-<a class="wa" href="#" aria-label="צ׳אט בוואטסאפ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+<a class="wa" id="waLink" href="#" target="_blank" rel="noopener" aria-label="צ׳אט בוואטסאפ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
 
 <div class="scrim" id="scrim" onclick="toggleCart(false);toggleMnav(false)"></div>
 
@@ -428,7 +429,6 @@ footer .logo{text-align:right;color:#fff}
 
 <script>
 /* ---------- DATA ---------- */
-const ANNOUNCE = ["משלוח חינם בהזמנה מעל ₪299","החזרה קלה תוך 14 יום","עד 3 תשלומים ללא ריבית","אריזת מתנה חינם בכל הזמנה","10% הנחה בהצטרפות למועדון"];
 
 const NAV = [
   {key:"women", label:"לנשים", cols:[
@@ -462,26 +462,10 @@ const CATS = [
   {key:"home",label:"שעוני קיר",img:"img/wall-clock.jpg"}
 ];
 
-// gender: women / men / unisex · stock: number in stock
-const P = [
-  {id:1, name:"שעון מינימל רוז", brand:"ATELIER", cat:"watches", g:"women", img:"img/watch-rose.jpg", spec:"קוטר 34 מ״מ · רצועת עור", price:690, was:890, stock:4, best:1},
-  {id:2, name:"שעון חכם ספורט", brand:"TECH", cat:"watches", g:"unisex", img:"img/watch-smart.jpg", spec:"44 מ״מ · עמיד במים", price:899, was:1190, stock:12, best:1},
-  {id:3, name:"שעון לבן נורדי", brand:"ATELIER", cat:"watches", g:"unisex", img:"img/watch-white.jpg", spec:"40 מ״מ · רצועת סיליקון", price:540, was:720, stock:2, best:1},
-  {id:4, name:"שרשרת סהר וטורקיז", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/necklace-moon.jpg", spec:"ציפוי זהב 14K · שכבתית", price:320, stock:9, best:1, isNew:1},
-  {id:5, name:"עגילי חישוק קלועים", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/hoops-gold.jpg", spec:"ציפוי זהב · 3 ס״מ", price:240, stock:15, best:1, isNew:1},
-  {id:6, name:"טבעת הילה", brand:"FINE", cat:"jewelry", g:"women", img:"img/ring.jpg", spec:"כסף 925 · זירקונים", price:460, was:540, stock:5, best:1},
-  {id:7, name:"צמיד פייזלי", brand:"FINE", cat:"jewelry", g:"women", img:"img/bracelet-gold.jpg", spec:"ציפוי זהב · זירקונים", price:380, stock:7},
-  {id:8, name:"עגילי ספיר וינטג׳", brand:"JEWELRY", cat:"jewelry", g:"women", img:"img/earrings-blue.jpg", spec:"אבן כחולה · ציפוי רודיום", price:290, was:360, stock:3},
-  {id:9, name:"מחרוזת פנינים קלאסית", brand:"FINE", cat:"jewelry", g:"women", img:"img/pearls.jpg", spec:"פניני מים מתוקים · 45 ס״מ", price:780, stock:6},
-  {id:10, name:"תיק צד שברון", brand:"BAGS", cat:"bags", g:"women", img:"img/bag-pink.jpg", spec:"עור · רצועת שרשרת", price:590, was:740, stock:8, best:1},
-  {id:11, name:"תיק קרוקו בורדו", brand:"BAGS", cat:"bags", g:"women", img:"img/bag-croco.jpg", spec:"עור בהטבעת קרוקו", price:650, stock:4, isNew:1},
-  {id:12, name:"ארנק עור קלאסי", brand:"LEATHER", cat:"wallets", g:"men", img:"img/wallet.jpg", spec:"עור בקר · 8 כרטיסים", price:220, was:280, stock:20, best:1},
-  {id:13, name:"כובע וינטג׳ אפור", brand:"BASICS", cat:"accessories", g:"men", img:"img/cap.jpg", spec:"כותנה שטופה · מתכוונן", price:120, stock:25, best:1},
-  {id:14, name:"צעיף משבצות צמר", brand:"BASICS", cat:"accessories", g:"unisex", img:"img/scarf.jpg", spec:"תערובת צמר · 180 ס״מ", price:190, was:240, stock:10},
-  {id:15, name:"שעון קיר נורדי", brand:"HOME", cat:"home", g:"unisex", img:"img/wall-clock.jpg", spec:"קוטר 30 ס״מ · מנגנון שקט", price:260, stock:11}
-];
+// loaded from data/*.json (edited via admin.html)
+let P = [], S = {};
 
-const FREE_SHIP = 299;
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const ils = n => "₪" + n.toLocaleString("he-IL");
 const $ = s => document.querySelector(s);
 const off = p => p.was ? Math.round((1 - p.price / p.was) * 100) : 0;
@@ -490,8 +474,6 @@ let cart = store.get("luma-cart", {});
 let favs = new Set(store.get("luma-favs", []));
 
 /* ---------- RENDER ---------- */
-$("#track").innerHTML = [...ANNOUNCE, ...ANNOUNCE].map(t => `<span>${t}</span>`).join("");
-
 $("#desktopNav").innerHTML = "<ul>" + NAV.map(n => `<li>
   <a href="#shop" class="${n.cls||""}" onclick="filterCat('${n.key}')">${n.label}</a>
   ${n.cols ? `<div class="mega"><div class="wrap">${n.cols.map(c => `<div><h4>${c.h}</h4><ul>${c.items.map(i => `<li><a href="#shop" onclick="filterCat('${n.key}')">${i}</a></li>`).join("")}</ul></div>`).join("")}
@@ -513,17 +495,17 @@ function card(p){
   const d = off(p);
   return `<article class="card">
     <div class="ph">
-      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">
       ${d ? `<span class="tag off">-${d}%</span>` : p.isNew ? `<span class="tag">חדש</span>` : ""}
       <button class="fav ${favs.has(p.id)?"on":""}" aria-label="הוספה למועדפים" onclick="toggleFav(${p.id},this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></button>
-      <button class="quick" onclick="addToCart(${p.id})">הוספה לסל +</button>
+      ${p.stock > 0 ? `<button class="quick" onclick="addToCart(${p.id})">הוספה לסל +</button>` : ""}
     </div>
     <div class="info">
-      <span class="brand">${p.brand}</span>
-      <span class="name">${p.name}</span>
-      <span class="spec">${p.spec}</span>
+      <span class="brand">${esc(p.brand)}</span>
+      <span class="name">${esc(p.name)}</span>
+      <span class="spec">${esc(p.spec)}</span>
       <div class="price">${d ? `<b class="red">${ils(p.price)}</b><s>${ils(p.was)}</s>` : `<b>${ils(p.price)}</b>`}</div>
-      <span class="stock ${p.stock<=4?"low":""}">${p.stock<=4 ? `נותרו ${p.stock} יחידות בלבד` : "✓ במלאי · נשלח תוך 24 שעות"}</span>
+      <span class="stock ${p.stock<=4?"low":""}">${p.stock <= 0 ? "אזל מהמלאי" : p.stock<=4 ? `נותרו ${p.stock} יחידות בלבד` : "✓ במלאי · נשלח תוך 24 שעות"}</span>
     </div>
   </article>`;
 }
@@ -562,13 +544,13 @@ function renderCart(){
   const count = items.reduce((s,x) => s + x.q, 0), sum = items.reduce((s,x) => s + x.q * x.p.price, 0);
   $("#cartCount").hidden = !count; $("#cartCount").textContent = count;
   $("#lines").innerHTML = items.length ? items.map(({p,q}) => `<div class="line">
-    <img src="${p.img}" alt="">
-    <div><div class="name">${p.name}</div><div class="spec">${p.spec}</div>
+    <img src="${esc(p.img)}" alt="">
+    <div><div class="name">${esc(p.name)}</div><div class="spec">${esc(p.spec)}</div>
       <div class="qty"><button onclick="setQty(${p.id},1)" aria-label="הוספה">+</button><span>${q}</span><button onclick="setQty(${p.id},-1)" aria-label="הפחתה">−</button></div></div>
     <div style="text-align:left"><b>${ils(p.price*q)}</b><br><button class="rm" onclick="setQty(${p.id},-${q})">הסרה</button></div>
   </div>`).join("") : `<div class="empty">הסל ריק כרגע</div>`;
-  const left = FREE_SHIP - sum;
-  $("#shipBar").innerHTML = (left > 0 ? `עוד <b>${ils(left)}</b> למשלוח חינם 🚚` : `<b>מגיע לך משלוח חינם! 🎉</b>`) + `<div class="bar"><i style="width:${Math.min(100, sum/FREE_SHIP*100)}%"></i></div>`;
+  const fs = S.freeShip || 0, left = fs - sum;
+  $("#shipBar").innerHTML = !fs ? "" : (left > 0 ? `עוד <b>${ils(left)}</b> למשלוח חינם 🚚` : `<b>מגיע לך משלוח חינם! 🎉</b>`) + `<div class="bar"><i style="width:${Math.min(100, sum/fs*100)}%"></i></div>`;
   $("#total").textContent = ils(sum);
 }
 function toggleCart(on){ $("#drawer").classList.toggle("on", on); $("#scrim").classList.toggle("on", on); }
@@ -599,8 +581,44 @@ tick(); setInterval(tick, 1000);
 
 document.addEventListener("keydown", e => { if (e.key === "Escape") { toggleCart(false); toggleMnav(false); } });
 
-setBest("women", document.querySelector('[data-g=women]'));
-renderShop(); renderCart(); renderFavCount();
+/* ---------- SETTINGS (from data/settings.json) ---------- */
+function applySettings(){
+  const a = S.announce || [];
+  $("#track").innerHTML = [...a, ...a].map(t => `<span>${esc(t)}</span>`).join("");
+  $(".announce").hidden = !a.length;
+  const h = S.hero || {};
+  $("#heroEyebrow").textContent = h.eyebrow || "";
+  $("#heroTitle").innerHTML = esc(h.title).replace(/\n/g, "<br>");
+  $("#heroText").textContent = h.text || "";
+  const sl = S.sale || {};
+  $("#saleSection").hidden = !sl.show;
+  $("#saleEyebrow").textContent = sl.eyebrow || "";
+  $("#saleTitle").innerHTML = `עד <span>${esc(sl.percent)}%</span> הנחה<br>${esc(sl.title)}`;
+  $("#trustShip").textContent = S.freeShip ? `משלוח חינם מעל ${ils(S.freeShip)}` : "משלוח מהיר";
+  const c = S.contact || {}, hr = S.hours || {};
+  const wa = (c.whatsapp || "").replace(/\D/g, "").replace(/^0/, "972");
+  $("#waLink").href = wa ? "https://wa.me/" + wa : "#";
+  $("#waLink").hidden = !wa;
+  document.querySelectorAll(".ig-link").forEach(l => l.href = c.instagram ? "https://instagram.com/" + c.instagram.replace(/^@/, "") : "#");
+  $("#igHandle").textContent = c.instagram ? "@" + c.instagram.replace(/^@/, "") : "";
+  $("#fbLink").href = c.facebook || "#"; $("#fbLink").hidden = !c.facebook;
+  $("#ttLink").href = c.tiktok || "#"; $("#ttLink").hidden = !c.tiktok;
+  $("#footContact").innerHTML = (c.address ? `📍 <a href="https://maps.google.com/?q=${encodeURIComponent(c.address)}" target="_blank" rel="noopener">${esc(c.address)}</a><br>` : "") + [c.phone && `📞 <a href="tel:${esc(c.phone)}">${esc(c.phone)}</a>`, wa && `💬 <a href="https://wa.me/${wa}" target="_blank" rel="noopener">וואטסאפ</a>`].filter(Boolean).join(" · ") + (c.email ? `<br>✉️ <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : "");
+  $("#footHours").innerHTML = `<li>א׳–ה׳: ${esc(hr.weekdays)}</li><li>ו׳ וערבי חג: ${esc(hr.friday)}</li><li>שבת: ${esc(hr.saturday)}</li>`;
+  $("#topHours").textContent = [c.address && `📍 ${c.address}`, c.phone && `📞 ${c.phone}`, `א׳–ה׳ ${hr.weekdays || ""} · ו׳ ${hr.friday || ""}`].filter(Boolean).join("  ·  ");
+}
+
+async function init(){
+  try {
+    const v = "?v=" + Date.now();
+    const [prods, settings] = await Promise.all([fetch("data/products.json" + v).then(r => r.json()), fetch("data/settings.json" + v).then(r => r.json())]);
+    P = prods.filter(p => !p.hidden); S = settings;
+  } catch (e) { console.error(e); toast("שגיאה בטעינת הקטלוג"); }
+  applySettings();
+  setBest("women", document.querySelector('[data-g=women]'));
+  renderShop(); renderCart(); renderFavCount();
+}
+init();
 </script>
 </body>
 </html>

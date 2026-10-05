@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ניהול — בית התכשיטנים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Frank+Ruhl+Libre:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3ee;--card:#fff;--ink:#151515;--muted:#6b6660;--line:#e7e2da;--gold:#a8834f;--red:#c0392b;--ok:#2e7d4f}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:Heebo,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit;width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:-1px;border-color:transparent}
+textarea{resize:vertical;min-height:80px}
+label{display:block;font-size:13px;font-weight:500;color:var(--muted)}
+label>input,label>select,label>textarea{margin-top:4px}
+a{color:var(--gold)}
+.logo{font-family:"Frank Ruhl Libre",serif;font-size:24px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:42px;padding:0 18px;border-radius:999px;font-weight:700;font-size:14px;white-space:nowrap}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:var(--gold)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-line{border:1.5px solid var(--line);background:#fff}.btn-line:hover{border-color:var(--ink)}
+.btn-red{color:var(--red)}
+.btn:disabled{opacity:.5;cursor:default}
+.small{font-size:13px;color:var(--muted)}
+.err{color:var(--red);font-size:14px;min-height:20px}
+
+/* login */
+.login{max-width:420px;margin:8vh auto;padding:0 16px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;gap:14px}
+.box h1{font-size:20px}
+.steps{font-size:14px;color:var(--muted);padding-right:18px;display:grid;gap:4px}
+.steps b{color:var(--ink)}
+
+/* app */
+header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:10px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);background:#fff}
+.tabs .wrap{display:flex;gap:4px}
+.tab{padding:12px 16px;font-weight:500;border-bottom:2px solid transparent;color:var(--muted)}
+.tab.on{border-color:var(--ink);color:var(--ink)}
+main{padding:20px 0 120px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input{flex:1;min-width:180px}
+.toolbar select{width:auto}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--muted)}
+.stat b{display:block;font-size:20px;color:var(--ink)}
+.list{display:grid;gap:8px}
+.row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+.row.hid{opacity:.55}
+.row img{width:64px;height:64px;object-fit:cover;border-radius:8px;background:var(--bg)}
+.row .n{font-weight:700}
+.row .meta{font-size:13px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--bg);color:var(--ink)}
+.pill.red{background:#fbe9e7;color:var(--red)}.pill.gold{background:#f4ecdf;color:var(--gold)}.pill.gray{background:#eee;color:#666}
+.row .acts{display:flex;gap:2px}
+.icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
+.icon:hover{background:var(--bg)}
+.icon svg{width:18px;height:18px}
+.price s{color:var(--muted);font-size:12px}
+
+/* settings */
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px}
+.card h3{font-size:16px;margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);font-weight:500}
+.chk input{width:18px;height:18px;margin:0}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:grid;place-items:center;padding:16px}
+.modal .box{width:min(640px,100%);max-height:92vh;overflow:auto}
+.imgpick{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.imgpick img{width:120px;height:140px;object-fit:cover;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.mfoot{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
+
+/* publish bar */
+.pub{position:fixed;bottom:0;inset-inline:0;background:var(--ink);color:#fff;z-index:30;transform:translateY(100%);transition:.25s}
+.pub.on{transform:none}
+.pub .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.toast{position:fixed;top:72px;right:50%;transform:translate(50%,-150px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;z-index:90;transition:.3s;font-size:14px;max-width:92vw;text-align:center}
+.toast.on{transform:translate(50%,0)}
+.toast.bad{background:var(--red)}
+
+@media (max-width:640px){
+  .g2,.g3{grid-template-columns:1fr}
+  .row{grid-template-columns:52px 1fr}
+  .row img{width:52px;height:52px}
+  .row .acts{grid-column:1/-1;justify-content:flex-end;border-top:1px solid var(--line);padding-top:4px}
+  .imgpick{grid-template-columns:90px 1fr}.imgpick img{width:90px;height:105px}
+  header.top .hide-m{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login" id="loginView" hidden>
+  <div style="text-align:center;margin-bottom:18px"><div class="logo">בית התכשיטנים</div><div class="small">מערכת ניהול</div></div>
+
+  <form class="box" id="unlockForm" hidden>
+    <h1>כניסה לניהול</h1>
+    <label>סיסמה<input type="password" id="unlockPass" autocomplete="current-password" required></label>
+    <div class="err" id="unlockErr"></div>
+    <button class="btn btn-dark">כניסה</button>
+    <button type="button" class="small" style="text-decoration:underline" onclick="resetDevice()">שכחתי סיסמה / חיבור מחדש</button>
+  </form>
+
+  <form class="box" id="setupForm" hidden>
+    <h1>הגדרה ראשונה במכשיר הזה</h1>
+    <ol class="steps">
+      <li>נכנסים ל<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">יצירת מפתח גישה ב-GitHub</a></li>
+      <li>שם: <b>ניהול אתר</b> · תוקף: <b>שנה</b></li>
+      <li>Repository access: <b>Only select repositories</b> → <b id="repoName"></b></li>
+      <li>Permissions → Repository → <b>Contents: Read and write</b></li>
+      <li>לוחצים Generate ומדביקים כאן את המפתח</li>
+    </ol>
+    <label>מפתח גישה (Token)<input type="password" id="setupToken" placeholder="github_pat_..." required autocomplete="off"></label>
+    <label>בחירת סיסמה לכניסה<input type="password" id="setupPass" minlength="6" required autocomplete="new-password"></label>
+    <label>אימות סיסמה<input type="password" id="setupPass2" minlength="6" required autocomplete="new-password"></label>
+    <div class="err" id="setupErr"></div>
+    <button class="btn btn-dark" id="setupBtn">שמירה וכניסה</button>
+    <p class="small">המפתח נשמר רק במכשיר הזה, מוצפן בסיסמה שבחרת. בכל מכשיר חדש (טלפון, מחשב) צריך לבצע את ההגדרה הזו פעם אחת.</p>
+  </form>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appView" hidden>
+  <header class="top"><div class="wrap">
+    <div><span class="logo" style="font-size:20px">בית התכשיטנים</span> <span class="small hide-m">· ניהול</span></div>
+    <div style="display:flex;gap:6px">
+      <a class="btn btn-line" href="./" target="_blank">צפייה באתר ↗</a>
+      <button class="btn btn-line" onclick="logout()">יציאה</button>
+    </div>
+  </div></header>
+  <nav class="tabs"><div class="wrap">
+    <button class="tab on" data-tab="products" onclick="showTab('products')">מוצרים</button>
+    <button class="tab" data-tab="settings" onclick="showTab('settings')">הגדרות אתר</button>
+  </div></nav>
+
+  <main class="wrap">
+    <section id="tab-products">
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="חיפוש מוצר…" oninput="renderList()">
+        <select id="fcat" onchange="renderList()"></select>
+        <button class="btn btn-dark" onclick="openEditor()">+ מוצר חדש</button>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <section id="tab-settings" hidden>
+      <form id="settingsForm" oninput="settingsChanged()">
+        <div class="card"><h3>📣 פס הודעות עליון</h3>
+          <label>הודעה בכל שורה (שורות ריקות יוסרו)<textarea name="announce" rows="5"></textarea></label>
+        </div>
+        <div class="card"><h3>🖼️ באנר ראשי</h3>
+          <div style="display:grid;gap:12px">
+            <label>כותרת קטנה<input name="hero.eyebrow"></label>
+            <label>כותרת ראשית (Enter לשורה חדשה)<textarea name="hero.title" rows="2"></textarea></label>
+            <label>טקסט<textarea name="hero.text" rows="3"></textarea></label>
+          </div>
+        </div>
+        <div class="card"><h3>🏷️ באנר מבצע</h3>
+          <div style="display:grid;gap:12px">
+            <label class="chk"><input type="checkbox" name="sale.show"> להציג את באנר המבצע</label>
+            <div class="g3">
+              <label>כותרת קטנה<input name="sale.eyebrow"></label>
+              <label>אחוז הנחה<input name="sale.percent" type="number" min="0" max="100"></label>
+              <label>על מה המבצע<input name="sale.title"></label>
+            </div>
+          </div>
+        </div>
+        <div class="card"><h3>🚚 משלוחים</h3>
+          <label>משלוח חינם מעל (₪) — 0 לביטול<input name="freeShip" type="number" min="0"></label>
+        </div>
+        <div class="card"><h3>📞 פרטי קשר ורשתות</h3>
+          <div class="g2">
+            <label style="grid-column:1/-1">כתובת החנות<input name="contact.address"></label>
+            <label>טלפון<input name="contact.phone" type="tel"></label>
+            <label>וואטסאפ (מספר נייד, למשל 050-1234567)<input name="contact.whatsapp" type="tel"></label>
+            <label>אימייל<input name="contact.email" type="email"></label>
+            <label>אינסטגרם (שם משתמש)<input name="contact.instagram" dir="ltr"></label>
+            <label>פייסבוק (קישור מלא)<input name="contact.facebook" dir="ltr" type="url"></label>
+            <label>טיקטוק (קישור מלא)<input name="contact.tiktok" dir="ltr" type="url"></label>
+          </div>
+        </div>
+        <div class="card"><h3>🕘 שעות פעילות</h3>
+          <div class="g3">
+            <label>א׳–ה׳<input name="hours.weekdays"></label>
+            <label>ו׳ וערבי חג<input name="hours.friday"></label>
+            <label>שבת<input name="hours.saturday"></label>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="pub" id="pubBar"><div class="wrap">
+    <span id="pubText">יש שינויים שלא פורסמו</span>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="color:#fff;border:1.5px solid #555" onclick="discard()">ביטול שינויים</button>
+      <button class="btn btn-gold" id="pubBtn" onclick="publish()">פרסום לאתר</button>
+    </div>
+  </div></div>
+</div>
+
+<!-- ============ PRODUCT EDITOR ============ -->
+<div class="modal" id="editor" hidden onclick="if(event.target===this)closeEditor()">
+  <form class="box" id="editForm">
+    <h1 id="edTitle">מוצר חדש</h1>
+    <div class="imgpick">
+      <img id="edImg" alt="">
+      <div style="display:grid;gap:6px">
+        <label class="btn btn-line" style="cursor:pointer;color:var(--ink)">📷 בחירת תמונה<input type="file" accept="image/*" id="edFile" hidden></label>
+        <span class="small">התמונה תוקטן אוטומטית. מומלץ צילום על רקע בהיר.</span>
+      </div>
+    </div>
+    <label>שם המוצר<input name="name" required></label>
+    <div class="g2">
+      <label>קטגוריה<select name="cat" id="edCat"></select></label>
+      <label>מיועד ל<select name="g"><option value="women">נשים</option><option value="men">גברים</option><option value="unisex">לכולם</option></select></label>
+    </div>
+    <label>קולקציה / מותג (מופיע קטן מעל השם)<input name="brand" dir="auto"></label>
+    <label>פרטים (מידה, חומר וכו׳)<input name="spec"></label>
+    <div class="g3">
+      <label>מחיר (₪)<input name="price" type="number" min="0" step="1" required></label>
+      <label>מחיר לפני הנחה (לא חובה)<input name="was" type="number" min="0" step="1"></label>
+      <label>כמות במלאי<input name="stock" type="number" min="0" step="1" required></label>
+    </div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      <label class="chk"><input type="checkbox" name="best"> נמכר ביותר</label>
+      <label class="chk"><input type="checkbox" name="isNew"> חדש</label>
+      <label class="chk"><input type="checkbox" name="hidden"> מוסתר מהאתר</label>
+    </div>
+    <div class="err" id="edErr"></div>
+    <div class="mfoot">
+      <button type="button" class="btn btn-red" id="edDelete" onclick="deleteProduct()">🗑 מחיקה</button>
+      <div style="display:flex;gap:8px;margin-inline-start:auto">
+        <button type="button" class="btn btn-line" onclick="closeEditor()">ביטול</button>
+        <button class="btn btn-dark">שמירה</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- CONFIG ---------- */
+const onPages = location.hostname.endsWith("github.io");
+const OWNER = onPages ? location.hostname.split(".")[0] : "ofir6188-lang";
+const REPO = onPages ? location.pathname.split("/")[1] : "beit-hatachshitanim";
+const BRANCH = "main";
+const KEY = "bt-admin-v1";
+const CATS = {watches:"שעונים", jewelry:"תכשיטים", bags:"תיקים", wallets:"ארנקים", accessories:"כובעים וצעיפים", home:"שעוני קיר"};
+const G = {women:"נשים", men:"גברים", unisex:"לכולם"};
+
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ils = n => "₪" + Number(n || 0).toLocaleString("he-IL");
+const ls = {get(k){try{return localStorage.getItem(k)}catch{return null}}, set(k,v){try{localStorage.setItem(k,v)}catch{}}, del(k){try{localStorage.removeItem(k)}catch{}}};
+const ss = {get(k){try{return sessionStorage.getItem(k)}catch{return null}}, set(k,v){try{sessionStorage.setItem(k,v)}catch{}}, del(k){try{sessionStorage.removeItem(k)}catch{}}};
+
+let TOKEN = null;
+let products = [], settings = {}, sha = {}, saved = {products:"", settings:""};
+let pendingImgs = {}; // path -> base64 (no prefix)
+let editing = null, edImgData = null;
+
+function toast(m, bad){ const t = $("#toast"); t.textContent = m; t.classList.toggle("bad", !!bad); t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), bad ? 5000 : 2600); }
+
+/* ---------- CRYPTO: token encrypted with the admin password ---------- */
+const enc = new TextEncoder(), dec = new TextDecoder();
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function deriveKey(pass, salt){
+  const base = await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt, iterations:310000, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+}
+async function lockToken(token, pass){
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, await deriveKey(pass, salt), enc.encode(token));
+  ls.set(KEY, JSON.stringify({salt:b64(salt), iv:b64(iv), ct:b64(ct)}));
+}
+async function unlockToken(pass){
+  const o = JSON.parse(ls.get(KEY));
+  const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(o.iv)}, await deriveKey(pass, unb64(o.salt)), unb64(o.ct));
+  return dec.decode(pt);
+}
+
+/* ---------- GITHUB API ---------- */
+async function gh(path, opts = {}){
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}${path}`, {
+    ...opts, cache:"no-store",
+    headers:{Authorization:`Bearer ${TOKEN}`, Accept:"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28", ...(opts.headers||{})}
+  });
+  if (!r.ok) { const e = new Error((await r.json().catch(() => ({}))).message || r.statusText); e.status = r.status; throw e; }
+  return r.json();
+}
+const utf8ToB64 = s => { const b = enc.encode(s); let bin = ""; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(bin); };
+const b64ToUtf8 = s => dec.decode(unb64(s.replace(/\n/g, "")));
+async function readJson(path){ const f = await gh(`/contents/${path}?ref=${BRANCH}`); sha[path] = f.sha; return JSON.parse(b64ToUtf8(f.content)); }
+async function putFile(path, contentB64, message){
+  const body = {message, content:contentB64, branch:BRANCH};
+  if (sha[path]) body.sha = sha[path];
+  const r = await gh(`/contents/${path}`, {method:"PUT", body:JSON.stringify(body)});
+  sha[path] = r.content.sha;
+}
+
+/* ---------- AUTH FLOW ---------- */
+function showLogin(){
+  $("#appView").hidden = true; $("#loginView").hidden = false;
+  const has = !!ls.get(KEY);
+  $("#unlockForm").hidden = !has; $("#setupForm").hidden = has;
+  $("#repoName").textContent = REPO;
+  setTimeout(() => (has ? $("#unlockPass") : $("#setupToken")).focus(), 50);
+}
+$("#unlockForm").onsubmit = async e => {
+  e.preventDefault(); $("#unlockErr").textContent = "";
+  try { TOKEN = await unlockToken($("#unlockPass").value); }
+  catch { $("#unlockErr").textContent = "סיסמה שגויה"; return; }
+  ss.set("bt-tok", TOKEN); $("#unlockPass").value = ""; enterApp();
+};
+$("#setupForm").onsubmit = async e => {
+  e.preventDefault(); const err = $("#setupErr"); err.textContent = "";
+  const tok = $("#setupToken").value.trim(), p1 = $("#setupPass").value, p2 = $("#setupPass2").value;
+  if (p1 !== p2) return err.textContent = "הסיסמאות לא תואמות";
+  $("#setupBtn").disabled = true; TOKEN = tok;
+  try {
+    const repo = await gh("");
+    if (!repo.permissions?.push) throw new Error("למפתח אין הרשאת כתיבה (Contents: Read and write)");
+  } catch (x) {
+    TOKEN = null; $("#setupBtn").disabled = false;
+    return err.textContent = x.status === 401 ? "המפתח לא תקין" : x.status === 404 ? `למפתח אין גישה לריפו ${REPO}` : x.message;
+  }
+  await lockToken(tok, p1); ss.set("bt-tok", tok);
+  $("#setupForm").reset(); $("#setupBtn").disabled = false; enterApp();
+};
+function resetDevice(){
+  if (!confirm("למחוק את החיבור השמור במכשיר הזה? תצטרך להדביק מפתח גישה מחדש.")) return;
+  ls.del(KEY); ss.del("bt-tok"); showLogin();
+}
+function logout(){
+  if (dirty() && !confirm("יש שינויים שלא פורסמו. לצאת בכל זאת?")) return;
+  TOKEN = null; ss.del("bt-tok"); showLogin();
+}
+
+/* ---------- LOAD ---------- */
+async function enterApp(){
+  $("#loginView").hidden = true; $("#appView").hidden = false;
+  $("#list").innerHTML = `<p class="small">טוען…</p>`;
+  try {
+    [products, settings] = await Promise.all([readJson("data/products.json"), readJson("data/settings.json")]);
+  } catch (x) {
+    if (x.status === 401) { ss.del("bt-tok"); toast("פג תוקף מפתח הגישה, צריך להתחבר מחדש", true); ls.del(KEY); return showLogin(); }
+    return toast("שגיאה בטעינה: " + x.message, true);
+  }
+  saved = {products:JSON.stringify(products), settings:JSON.stringify(settings)};
+  pendingImgs = {};
+  $("#fcat").innerHTML = `<option value="">כל הקטגוריות</option>` + Object.entries(CATS).map(([k,v]) => `<option value="${k}">${v}</option>`).join("");
+  $("#edCat").innerHTML = Object.entries(CATS).map(([k,v]) => `<option value="${k}">${v}</option>`).join("");
+  renderList(); fillSettings(); updateBar();
+}
+
+/* ---------- PRODUCTS ---------- */
+function renderList(){
+  const q = $("#q").value.trim().toLowerCase(), fc = $("#fcat").value;
+  const list = products.filter(p => (!fc || p.cat === fc) && (!q || (p.name + " " + p.brand + " " + p.spec).toLowerCase().includes(q)));
+  const vis = products.filter(p => !p.hidden);
+  $("#stats").innerHTML = `
+    <div class="stat"><b>${vis.length}</b>מוצרים באתר</div>
+    <div class="stat"><b>${vis.filter(p => p.was).length}</b>במבצע</div>
+    <div class="stat"><b style="color:${vis.some(p => p.stock <= 0) ? "var(--red)" : "inherit"}">${vis.filter(p => p.stock <= 0).length}</b>אזלו מהמלאי</div>
+    <div class="stat"><b>${products.filter(p => p.hidden).length}</b>מוסתרים</div>`;
+  $("#list").innerHTML = list.length ? list.map(p => `
+    <div class="row ${p.hidden ? "hid" : ""}">
+      <img src="${esc(imgSrc(p.img))}" alt="" loading="lazy">
+      <div>
+        <div class="n">${esc(p.name)}</div>
+        <div class="meta">
+          <span>${CATS[p.cat] || p.cat} · ${G[p.g] || ""}</span>
+          <span class="price"><b style="color:var(--ink)">${ils(p.price)}</b> ${p.was ? `<s>${ils(p.was)}</s>` : ""}</span>
+          <span>· מלאי: ${p.stock}</span>
+          ${p.was ? `<span class="pill red">מבצע</span>` : ""}${p.best ? `<span class="pill gold">נמכר ביותר</span>` : ""}${p.isNew ? `<span class="pill">חדש</span>` : ""}${p.hidden ? `<span class="pill gray">מוסתר</span>` : ""}${p.stock <= 0 ? `<span class="pill red">אזל</span>` : ""}
+        </div>
+      </div>
+      <div class="acts">
+        <button class="icon" title="${p.hidden ? "הצגה באתר" : "הסתרה מהאתר"}" onclick="toggleHidden(${p.id})">${p.hidden
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A10 10 0 0 1 12 6c6 0 9.5 6 9.5 6a17 17 0 0 1-3 3.6M6.6 7.6A16 16 0 0 0 2.5 12S6 18 12 18c1.5 0 2.8-.3 4-.9"/></svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/></svg>`}</button>
+        <button class="icon" title="שכפול" onclick="duplicate(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+        <button class="icon" title="עריכה" onclick="openEditor(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button>
+      </div>
+    </div>`).join("") : `<p class="small" style="text-align:center;padding:30px">אין מוצרים להצגה</p>`;
+}
+const imgSrc = path => pendingImgs[path] ? "data:image/jpeg;base64," + pendingImgs[path] : path;
+const nextId = () => products.reduce((m, p) => Math.max(m, p.id), 0) + 1;
+
+function toggleHidden(id){ const p = products.find(x => x.id === id); p.hidden = !p.hidden; renderList(); updateBar(); }
+function duplicate(id){
+  const p = products.find(x => x.id === id);
+  const c = {...p, id:nextId(), name:p.name + " (עותק)", hidden:true};
+  products.splice(products.indexOf(p) + 1, 0, c); renderList(); updateBar(); openEditor(c.id);
+}
+
+function openEditor(id){
+  editing = id ? products.find(p => p.id === id) : null; edImgData = null;
+  const f = $("#editForm"); f.reset(); $("#edErr").textContent = "";
+  $("#edTitle").textContent = editing ? "עריכת מוצר" : "מוצר חדש";
+  $("#edDelete").hidden = !editing;
+  const p = editing || {cat:"jewelry", g:"women", stock:1, brand:"", spec:""};
+  for (const k of ["name","brand","spec","price","was","stock","cat","g"]) f.elements[k].value = p[k] ?? "";
+  for (const k of ["best","isNew","hidden"]) f.elements[k].checked = !!p[k];
+  $("#edImg").src = p.img ? imgSrc(p.img) : "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14"><rect width="12" height="14" fill="#f6f3ee"/><text x="6" y="8.5" font-size="4" text-anchor="middle">📷</text></svg>');
+  $("#editor").hidden = false; f.elements.name.focus();
+}
+function closeEditor(){ $("#editor").hidden = true; editing = null; }
+
+$("#edFile").onchange = async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try { edImgData = await resizeImage(file, 1000); $("#edImg").src = "data:image/jpeg;base64," + edImgData; }
+  catch { toast("לא הצלחתי לקרוא את התמונה", true); }
+  e.target.value = "";
+};
+function resizeImage(file, max){
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const s = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg", .85).split(",")[1]);
+    };
+    img.onerror = rej; img.src = url;
+  });
+}
+
+$("#editForm").onsubmit = e => {
+  e.preventDefault(); const f = e.target;
+  const num = k => f.elements[k].value === "" ? null : Math.max(0, Math.round(+f.elements[k].value));
+  const data = {
+    name:f.elements.name.value.trim(), brand:f.elements.brand.value.trim(), spec:f.elements.spec.value.trim(),
+    cat:f.elements.cat.value, g:f.elements.g.value, price:num("price"), was:num("was"), stock:num("stock") ?? 0,
+    best:f.elements.best.checked, isNew:f.elements.isNew.checked, hidden:f.elements.hidden.checked
+  };
+  if (data.was !== null && data.was <= data.price) return $("#edErr").textContent = "המחיר לפני הנחה חייב להיות גבוה מהמחיר הנוכחי (או להשאיר ריק)";
+  if (!editing && !edImgData) return $("#edErr").textContent = "צריך לבחור תמונה למוצר";
+  const p = editing || {id:nextId()};
+  Object.assign(p, data);
+  if (edImgData) { const path = `img/uploads/p${p.id}-${Date.now().toString(36)}.jpg`; pendingImgs[path] = edImgData; p.img = path; }
+  if (!editing) products.unshift(p);
+  closeEditor(); renderList(); updateBar(); toast("נשמר. לחץ ״פרסום לאתר״ כדי שיופיע באתר");
+};
+function deleteProduct(){
+  if (!editing || !confirm(`למחוק את "${editing.name}"?`)) return;
+  products = products.filter(p => p !== editing); closeEditor(); renderList(); updateBar();
+}
+
+/* ---------- SETTINGS ---------- */
+const getPath = (o, path) => path.split(".").reduce((a, k) => a?.[k], o);
+const setPath = (o, path, v) => { const ks = path.split("."); const last = ks.pop(); ks.reduce((a, k) => a[k] ??= {}, o)[last] = v; };
+function fillSettings(){
+  for (const el of $("#settingsForm").elements) {
+    if (!el.name) continue;
+    const v = getPath(settings, el.name);
+    if (el.type === "checkbox") el.checked = !!v;
+    else el.value = el.name === "announce" ? (v || []).join("\n") : (v ?? "");
+  }
+}
+function settingsChanged(){
+  for (const el of $("#settingsForm").elements) {
+    if (!el.name) continue;
+    let v = el.type === "checkbox" ? el.checked : el.type === "number" ? (el.value === "" ? 0 : +el.value) : el.value;
+    if (el.name === "announce") v = el.value.split("\n").map(s => s.trim()).filter(Boolean);
+    setPath(settings, el.name, v);
+  }
+  updateBar();
+}
+
+/* ---------- PUBLISH ---------- */
+const dirty = () => JSON.stringify(products) !== saved.products || JSON.stringify(settings) !== saved.settings;
+function updateBar(){
+  const d = dirty(); $("#pubBar").classList.toggle("on", d);
+  const n = Object.keys(pendingImgs).length;
+  $("#pubText").textContent = "יש שינויים שלא פורסמו" + (n ? ` (כולל ${n} תמונות)` : "");
+}
+function discard(){
+  if (!confirm("לבטל את כל השינויים שלא פורסמו?")) return;
+  products = JSON.parse(saved.products); settings = JSON.parse(saved.settings); pendingImgs = {};
+  renderList(); fillSettings(); updateBar();
+}
+async function publish(){
+  const btn = $("#pubBtn"); btn.disabled = true; btn.textContent = "מפרסם…";
+  try {
+    const used = new Set(products.map(p => p.img));
+    for (const [path, data] of Object.entries(pendingImgs)) {
+      if (used.has(path)) await putFile(path, data, "תמונת מוצר חדשה");
+      delete pendingImgs[path];
+    }
+    if (JSON.stringify(products) !== saved.products) {
+      await putFile("data/products.json", utf8ToB64(JSON.stringify(products, null, 2) + "\n"), "עדכון קטלוג מוצרים");
+      saved.products = JSON.stringify(products);
+    }
+    if (JSON.stringify(settings) !== saved.settings) {
+      await putFile("data/settings.json", utf8ToB64(JSON.stringify(settings, null, 2) + "\n"), "עדכון הגדרות אתר");
+      saved.settings = JSON.stringify(settings);
+    }
+    toast("✓ פורסם! האתר יתעדכן תוך כדקה");
+  } catch (x) {
+    toast(x.status === 409 ? "מישהו עדכן את האתר במקביל. רענן את הדף ונסה שוב" : "הפרסום נכשל: " + x.message, true);
+  }
+  btn.disabled = false; btn.textContent = "פרסום לאתר"; updateBar(); renderList();
+}
+
+function showTab(t){
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  $("#tab-products").hidden = t !== "products"; $("#tab-settings").hidden = t !== "settings";
+}
+addEventListener("beforeunload", e => { if (TOKEN && dirty()) { e.preventDefault(); e.returnValue = ""; } });
+addEventListener("keydown", e => { if (e.key === "Escape" && !$("#editor").hidden) closeEditor(); });
+
+/* ---------- START ---------- */
+TOKEN = ss.get("bt-tok");
+TOKEN && ls.get(KEY) ? enterApp() : showLogin();
+</script>
+</body>
+</html>
