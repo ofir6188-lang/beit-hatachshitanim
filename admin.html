@@ -142,6 +142,7 @@ main{padding:20px 0 120px}
   </div></header>
   <nav class="tabs"><div class="wrap">
     <button class="tab on" data-tab="products" onclick="showTab('products')">מוצרים</button>
+    <button class="tab" data-tab="cats" onclick="showTab('cats')">קטגוריות</button>
     <button class="tab" data-tab="settings" onclick="showTab('settings')">הגדרות אתר</button>
   </div></nav>
 
@@ -154,6 +155,14 @@ main{padding:20px 0 120px}
         <button class="btn btn-dark" onclick="openEditor()">+ מוצר חדש</button>
       </div>
       <div class="list" id="list"></div>
+    </section>
+
+    <section id="tab-cats" hidden>
+      <div class="toolbar" style="justify-content:space-between;align-items:center">
+        <span class="small">הסדר כאן הוא הסדר באתר. קטגוריה שאין בה מוצרים גלויים לא תוצג באתר.</span>
+        <button class="btn btn-dark" onclick="openCat()">+ קטגוריה חדשה</button>
+      </div>
+      <div class="list" id="catList"></div>
     </section>
 
     <section id="tab-settings" hidden>
@@ -229,7 +238,8 @@ main{padding:20px 0 120px}
       <label>מיועד ל<select name="g"><option value="women">נשים</option><option value="men">גברים</option><option value="unisex">לכולם</option></select></label>
     </div>
     <label>קולקציה / מותג (מופיע קטן מעל השם)<input name="brand" dir="auto"></label>
-    <label>פרטים (מידה, חומר וכו׳)<input name="spec"></label>
+    <label>שורת תיאור קצרה (מופיעה בכרטיס המוצר)<input name="spec" placeholder="למשל: כסף 925 · 45 ס״מ"></label>
+    <label>פרטים נוספים (לא חובה, מוצג בלחיצה על המוצר; כל שורה = נקודה)<textarea name="details" rows="4" placeholder="חומר: כסף 925&#10;אורך השרשרת: 45 ס״מ&#10;מגיע בקופסת מתנה"></textarea></label>
     <div class="g3">
       <label>מחיר (₪)<input name="price" type="number" min="0" step="1" required></label>
       <label>מחיר לפני הנחה (לא חובה)<input name="was" type="number" min="0" step="1"></label>
@@ -251,6 +261,28 @@ main{padding:20px 0 120px}
   </form>
 </div>
 
+<div class="modal" id="catEditor" hidden onclick="if(event.target===this)closeCat()">
+  <form class="box" id="catForm">
+    <h1 id="catTitle">קטגוריה חדשה</h1>
+    <div class="imgpick">
+      <img id="catImg" alt="">
+      <div style="display:grid;gap:6px">
+        <label class="btn btn-line" style="cursor:pointer;color:var(--ink)">📷 בחירת תמונה<input type="file" accept="image/*" id="catFile" hidden></label>
+        <span class="small">מוצגת בעיגול בעמוד הבית.</span>
+      </div>
+    </div>
+    <label>שם הקטגוריה<input name="label" required></label>
+    <div class="err" id="catErr"></div>
+    <div class="mfoot">
+      <button type="button" class="btn btn-red" id="catDelete" onclick="deleteCat()">🗑 מחיקה</button>
+      <div style="display:flex;gap:8px;margin-inline-start:auto">
+        <button type="button" class="btn btn-line" onclick="closeCat()">ביטול</button>
+        <button class="btn btn-dark">שמירה</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -260,7 +292,8 @@ const OWNER = onPages ? location.hostname.split(".")[0] : "ofir6188-lang";
 const REPO = onPages ? location.pathname.split("/")[1] : "beit-hatachshitanim";
 const BRANCH = "main";
 const KEY = "bt-admin-v1";
-const CATS = {watches:"שעונים", jewelry:"תכשיטים", bags:"תיקים", wallets:"ארנקים", accessories:"כובעים וצעיפים", home:"שעוני קיר"};
+const cats = () => settings.categories ||= [];
+const catName = k => (cats().find(c => c.key === k) || {}).label || "ללא קטגוריה";
 const G = {women:"נשים", men:"גברים", unisex:"לכולם"};
 
 const $ = s => document.querySelector(s);
@@ -367,10 +400,16 @@ async function enterApp(){
   }
   saved = {products:JSON.stringify(products), settings:JSON.stringify(settings)};
   pendingImgs = {};
-  $("#fcat").innerHTML = `<option value="">כל הקטגוריות</option>` + Object.entries(CATS).map(([k,v]) => `<option value="${k}">${v}</option>`).join("");
-  $("#edCat").innerHTML = Object.entries(CATS).map(([k,v]) => `<option value="${k}">${v}</option>`).join("");
-  renderList(); fillSettings(); updateBar();
+  renderAll();
 }
+
+function renderCatOptions(){
+  const opts = cats().map(c => `<option value="${esc(c.key)}">${esc(c.label)}</option>`).join("");
+  const keep = $("#fcat").value;
+  $("#fcat").innerHTML = `<option value="">כל הקטגוריות</option>` + opts; $("#fcat").value = keep;
+  $("#edCat").innerHTML = opts;
+}
+function renderAll(){ renderCatOptions(); renderList(); renderCats(); fillSettings(); updateBar(); }
 
 /* ---------- PRODUCTS ---------- */
 function renderList(){
@@ -388,7 +427,7 @@ function renderList(){
       <div>
         <div class="n">${esc(p.name)}</div>
         <div class="meta">
-          <span>${CATS[p.cat] || p.cat} · ${G[p.g] || ""}</span>
+          <span>${esc(catName(p.cat))} · ${G[p.g] || ""}</span>
           <span class="price"><b style="color:var(--ink)">${ils(p.price)}</b> ${p.was ? `<s>${ils(p.was)}</s>` : ""}</span>
           <span>· מלאי: ${p.stock}</span>
           ${p.was ? `<span class="pill red">מבצע</span>` : ""}${p.best ? `<span class="pill gold">נמכר ביותר</span>` : ""}${p.isNew ? `<span class="pill">חדש</span>` : ""}${p.hidden ? `<span class="pill gray">מוסתר</span>` : ""}${p.stock <= 0 ? `<span class="pill red">אזל</span>` : ""}
@@ -399,6 +438,7 @@ function renderList(){
           ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A10 10 0 0 1 12 6c6 0 9.5 6 9.5 6a17 17 0 0 1-3 3.6M6.6 7.6A16 16 0 0 0 2.5 12S6 18 12 18c1.5 0 2.8-.3 4-.9"/></svg>`
           : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/></svg>`}</button>
         <button class="icon" title="שכפול" onclick="duplicate(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+        <button class="icon" title="מחיקה" style="color:var(--red)" onclick="deleteProduct(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
         <button class="icon" title="עריכה" onclick="openEditor(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button>
       </div>
     </div>`).join("") : `<p class="small" style="text-align:center;padding:30px">אין מוצרים להצגה</p>`;
@@ -418,8 +458,10 @@ function openEditor(id){
   const f = $("#editForm"); f.reset(); $("#edErr").textContent = "";
   $("#edTitle").textContent = editing ? "עריכת מוצר" : "מוצר חדש";
   $("#edDelete").hidden = !editing;
-  const p = editing || {cat:"jewelry", g:"women", stock:1, brand:"", spec:""};
-  for (const k of ["name","brand","spec","price","was","stock","cat","g"]) f.elements[k].value = p[k] ?? "";
+  renderCatOptions();
+  if (!cats().length) return toast("צריך ליצור קודם קטגוריה (בלשונית קטגוריות)", true);
+  const p = editing || {cat:$("#fcat").value || cats()[0].key, g:"women", stock:1, brand:"", spec:""};
+  for (const k of ["name","brand","spec","details","price","was","stock","cat","g"]) f.elements[k].value = p[k] ?? "";
   for (const k of ["best","isNew","hidden"]) f.elements[k].checked = !!p[k];
   $("#edImg").src = p.img ? imgSrc(p.img) : "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14"><rect width="12" height="14" fill="#f6f3ee"/><text x="6" y="8.5" font-size="4" text-anchor="middle">📷</text></svg>');
   $("#editor").hidden = false; f.elements.name.focus();
@@ -449,7 +491,7 @@ $("#editForm").onsubmit = e => {
   e.preventDefault(); const f = e.target;
   const num = k => f.elements[k].value === "" ? null : Math.max(0, Math.round(+f.elements[k].value));
   const data = {
-    name:f.elements.name.value.trim(), brand:f.elements.brand.value.trim(), spec:f.elements.spec.value.trim(),
+    name:f.elements.name.value.trim(), brand:f.elements.brand.value.trim(), spec:f.elements.spec.value.trim(), details:f.elements.details.value.trim(),
     cat:f.elements.cat.value, g:f.elements.g.value, price:num("price"), was:num("was"), stock:num("stock") ?? 0,
     best:f.elements.best.checked, isNew:f.elements.isNew.checked, hidden:f.elements.hidden.checked
   };
@@ -459,11 +501,67 @@ $("#editForm").onsubmit = e => {
   Object.assign(p, data);
   if (edImgData) { const path = `img/uploads/p${p.id}-${Date.now().toString(36)}.jpg`; pendingImgs[path] = edImgData; p.img = path; }
   if (!editing) products.unshift(p);
-  closeEditor(); renderList(); updateBar(); toast("נשמר. לחץ ״פרסום לאתר״ כדי שיופיע באתר");
+  closeEditor(); renderList(); renderCats(); updateBar(); toast("נשמר. לחץ ״פרסום לאתר״ כדי שיופיע באתר");
 };
-function deleteProduct(){
-  if (!editing || !confirm(`למחוק את "${editing.name}"?`)) return;
-  products = products.filter(p => p !== editing); closeEditor(); renderList(); updateBar();
+function deleteProduct(id){
+  const p = id ? products.find(x => x.id === id) : editing;
+  if (!p || !confirm(`למחוק את "${p.name}"?\n(המחיקה תיכנס לתוקף אחרי ״פרסום לאתר״)`)) return;
+  products = products.filter(x => x !== p); closeEditor(); renderList(); renderCats(); updateBar();
+}
+
+/* ---------- CATEGORIES ---------- */
+let editingCat = null, catImgData = null;
+function renderCats(){
+  const list = cats();
+  $("#catList").innerHTML = list.length ? list.map((c, i) => {
+    const all = products.filter(p => p.cat === c.key), vis = all.filter(p => !p.hidden).length;
+    return `<div class="row ${vis ? "" : "hid"}">
+      <img src="${esc(imgSrc(c.img || ""))}" alt="" style="border-radius:50%">
+      <div><div class="n">${esc(c.label)}</div>
+        <div class="meta">${all.length} מוצרים${all.length !== vis ? ` (${vis} גלויים)` : ""}${vis ? "" : ` <span class="pill gray">לא מוצגת באתר</span>`}</div></div>
+      <div class="acts">
+        <button class="icon" title="למעלה" onclick="moveCat(${i},-1)" ${i ? "" : "disabled style=opacity:.3"}>▲</button>
+        <button class="icon" title="למטה" onclick="moveCat(${i},1)" ${i < list.length - 1 ? "" : "disabled style=opacity:.3"}>▼</button>
+        <button class="icon" title="מחיקה" style="color:var(--red)" onclick="openCat(${i});deleteCat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
+        <button class="icon" title="עריכה" onclick="openCat(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button>
+      </div></div>`;
+  }).join("") : `<p class="small" style="text-align:center;padding:30px">אין קטגוריות עדיין</p>`;
+}
+function moveCat(i, d){ const l = cats(); [l[i], l[i + d]] = [l[i + d], l[i]]; renderAll(); }
+function openCat(i){
+  editingCat = i === undefined ? null : cats()[i]; catImgData = null;
+  const f = $("#catForm"); f.reset(); $("#catErr").textContent = "";
+  $("#catTitle").textContent = editingCat ? "עריכת קטגוריה" : "קטגוריה חדשה";
+  $("#catDelete").hidden = !editingCat;
+  f.elements.label.value = editingCat?.label || "";
+  $("#catImg").src = editingCat?.img ? imgSrc(editingCat.img) : $("#edImg").src;
+  $("#catImg").style.borderRadius = "50%"; $("#catImg").style.height = $("#catImg").style.width = "110px";
+  $("#catEditor").hidden = false;
+}
+function closeCat(){ $("#catEditor").hidden = true; editingCat = null; }
+$("#catFile").onchange = async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try { catImgData = await resizeImage(file, 600); $("#catImg").src = "data:image/jpeg;base64," + catImgData; }
+  catch { toast("לא הצלחתי לקרוא את התמונה", true); }
+  e.target.value = "";
+};
+$("#catForm").onsubmit = e => {
+  e.preventDefault();
+  const label = e.target.elements.label.value.trim();
+  if (cats().some(c => c !== editingCat && c.label === label)) return $("#catErr").textContent = "כבר יש קטגוריה בשם הזה";
+  if (!editingCat && !catImgData) return $("#catErr").textContent = "צריך לבחור תמונה לקטגוריה";
+  const c = editingCat || {key:"c" + Date.now().toString(36)};
+  c.label = label;
+  if (catImgData) { const path = `img/uploads/cat-${c.key}-${Date.now().toString(36)}.jpg`; pendingImgs[path] = catImgData; c.img = path; }
+  if (!editingCat) cats().push(c);
+  closeCat(); renderAll(); toast("נשמר. לחץ ״פרסום לאתר״ כדי שיופיע באתר");
+};
+function deleteCat(){
+  const c = editingCat; if (!c) return;
+  const n = products.filter(p => p.cat === c.key).length;
+  if (n) { closeCat(); return alert(`בקטגוריה "${c.label}" יש ${n} מוצרים.\nכדי למחוק אותה, צריך קודם להעביר את המוצרים לקטגוריה אחרת או למחוק אותם (בלשונית מוצרים, סינון לפי הקטגוריה).`); }
+  if (!confirm(`למחוק את הקטגוריה "${c.label}"?`)) return closeCat();
+  settings.categories = cats().filter(x => x !== c); closeCat(); renderAll();
 }
 
 /* ---------- SETTINGS ---------- */
@@ -497,14 +595,14 @@ function updateBar(){
 function discard(){
   if (!confirm("לבטל את כל השינויים שלא פורסמו?")) return;
   products = JSON.parse(saved.products); settings = JSON.parse(saved.settings); pendingImgs = {};
-  renderList(); fillSettings(); updateBar();
+  renderAll();
 }
 async function publish(){
   const btn = $("#pubBtn"); btn.disabled = true; btn.textContent = "מפרסם…";
   try {
-    const used = new Set(products.map(p => p.img));
+    const used = new Set([...products.map(p => p.img), ...cats().map(c => c.img)]);
     for (const [path, data] of Object.entries(pendingImgs)) {
-      if (used.has(path)) await putFile(path, data, "תמונת מוצר חדשה");
+      if (used.has(path)) await putFile(path, data, "תמונה חדשה");
       delete pendingImgs[path];
     }
     if (JSON.stringify(products) !== saved.products) {
@@ -517,18 +615,18 @@ async function publish(){
     }
     toast("✓ פורסם! האתר יתעדכן תוך כדקה");
   } catch (x) {
-    if (x.status === 403) alert("למפתח הגישה אין הרשאת כתיבה.\n\nכדי לתקן:\n1. github.com/settings/personal-access-tokens\n2. לוחצים על המפתח ← Edit\n3. Repository permissions ← Contents ← Read and write\n4. Update\n\nאחר כך לוחצים שוב ״פרסום לאתר״. השינויים שלך נשמרו בדף.");
+    if (x.status === 403) alert("למפתח הגישה אין הרשאת כתיבה.\n\nצריך ליצור מפתח חדש: לוחצים ״יציאה״ ← ״שכחתי סיסמה / חיבור מחדש״ ועוקבים אחרי ההוראות.");
     else toast(x.status === 409 ? "מישהו עדכן את האתר במקביל. רענן את הדף ונסה שוב" : x.status === 401 ? "פג תוקף מפתח הגישה. צא והתחבר מחדש" : "הפרסום נכשל: " + x.message, true);
   }
-  btn.disabled = false; btn.textContent = "פרסום לאתר"; updateBar(); renderList();
+  btn.disabled = false; btn.textContent = "פרסום לאתר"; updateBar(); renderList(); renderCats();
 }
 
 function showTab(t){
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
-  $("#tab-products").hidden = t !== "products"; $("#tab-settings").hidden = t !== "settings";
+  for (const k of ["products","cats","settings"]) $("#tab-" + k).hidden = t !== k;
 }
 addEventListener("beforeunload", e => { if (TOKEN && dirty()) { e.preventDefault(); e.returnValue = ""; } });
-addEventListener("keydown", e => { if (e.key === "Escape" && !$("#editor").hidden) closeEditor(); });
+addEventListener("keydown", e => { if (e.key === "Escape") { closeEditor(); closeCat(); } });
 
 /* ---------- START ---------- */
 TOKEN = ss.get("bt-tok");

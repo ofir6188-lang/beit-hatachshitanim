@@ -32,5 +32,37 @@
     "weekdays": "10:00–19:00",
     "friday": "9:00–14:00",
     "saturday": "סגור"
-  }
+  },
+  "categories": [
+    {
+      "key": "watches",
+      "label": "שעונים",
+      "img": "img/watch-rose.jpg"
+    },
+    {
+      "key": "jewelry",
+      "label": "תכשיטים",
+      "img": "img/necklace-moon.jpg"
+    },
+    {
+      "key": "bags",
+      "label": "תיקים",
+      "img": "img/bag-pink.jpg"
+    },
+    {
+      "key": "wallets",
+      "label": "ארנקים",
+      "img": "img/wallet.jpg"
+    },
+    {
+      "key": "accessories",
+      "label": "כובעים וצעיפים",
+      "img": "img/cap.jpg"
+    },
+    {
+      "key": "home",
+      "label": "שעוני קיר",
+      "img": "img/wall-clock.jpg"
+    }
+  ]
 }

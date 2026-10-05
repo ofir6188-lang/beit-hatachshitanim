@@ -213,6 +213,23 @@ footer .logo{text-align:right;color:#fff}
 .toast{position:fixed;bottom:24px;right:50%;transform:translate(50%,120px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;z-index:80;transition:.3s;font-size:14px}
 .toast.on{transform:translate(50%,0)}
 
+/* product popup */
+.pv{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:75;display:grid;place-items:center;padding:16px}
+.pv-box{position:relative;background:#fff;border-radius:16px;width:min(820px,100%);max-height:92vh;overflow:auto}
+.pv-x{position:absolute;top:10px;left:10px;background:#fff;z-index:1}
+.pv-body{display:grid;grid-template-columns:1fr 1fr}
+.pv-body>img{width:100%;height:100%;object-fit:cover;min-height:320px;max-height:560px}
+.pv-info{padding:28px;display:flex;flex-direction:column;gap:10px}
+.pv-info h3{font-family:"Frank Ruhl Libre",serif;font-size:28px;line-height:1.15}
+.pv-info .price b{font-size:22px}
+.pv-info .spec{font-size:15px}
+.pv-details{background:var(--soft);border-radius:10px;padding:12px 16px}
+.pv-details h4{font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:6px}
+.pv-details ul{padding-right:18px;display:grid;gap:3px;font-size:14px}
+.pv-info .btn{margin-top:auto}
+.card a.name:hover{color:var(--gold)}
+@media (max-width:640px){.pv{padding:0;align-items:end}.pv-box{border-radius:16px 16px 0 0}.pv-body{grid-template-columns:1fr}.pv-body>img{min-height:0;max-height:46vh}.pv-info{padding:20px}}
+
 /* mobile menu */
 .mnav{position:fixed;top:0;bottom:0;right:0;width:min(340px,88%);background:#fff;z-index:70;transform:translateX(100%);transition:.3s;overflow:auto;padding:20px}
 .mnav.on{transform:none}
@@ -425,43 +442,19 @@ footer .logo{text-align:right;color:#fff}
   <div id="mnavBody"></div>
 </aside>
 
+<div class="pv" id="pv" hidden onclick="if(event.target===this)closeProduct()">
+  <div class="pv-box" role="dialog" aria-modal="true" aria-label="פרטי מוצר">
+    <button class="icon-btn pv-x" onclick="closeProduct()" aria-label="סגירה">✕</button>
+    <div class="pv-body" id="pvBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 /* ---------- DATA ---------- */
 
-const NAV = [
-  {key:"women", label:"לנשים", cols:[
-    {h:"שעונים", items:["שעונים קלאסיים","שעונים חכמים","שעוני רוז גולד","שעוני עור"]},
-    {h:"תכשיטים", items:["שרשראות","עגילים","צמידים","טבעות"]},
-    {h:"אקססוריז", items:["תיקים","ארנקים","צעיפים"]}], promo:{img:"img/watch-rose.jpg",t:"חדש: קולקציית רוז גולד"}},
-  {key:"men", label:"לגברים", cols:[
-    {h:"שעונים", items:["שעונים קלאסיים","שעונים חכמים","שעוני ספורט"]},
-    {h:"אקססוריז", items:["ארנקים","כובעים","צמידים לגבר"]},
-    {h:"מתנות", items:["מתנות עד ₪200","מתנות עד ₪500","מארזי מתנה"]}], promo:{img:"img/wallet.jpg",t:"ארנקי עור בעבודת יד"}},
-  {key:"watches", label:"שעונים", cols:[
-    {h:"לפי סוג", items:["אנלוגי","חכם","כרונוגרף"]},
-    {h:"לפי רצועה", items:["עור","מתכת","סיליקון"]},
-    {h:"לפי מחיר", items:["עד ₪500","₪500–₪1,000","מעל ₪1,000"]}], promo:{img:"img/watch-white.jpg",t:"עד 30% הנחה"}},
-  {key:"jewelry", label:"תכשיטים", cols:[
-    {h:"סוג", items:["שרשראות","עגילים","צמידים","טבעות"]},
-    {h:"חומר", items:["כסף 925","ציפוי זהב","פנינים"]},
-    {h:"מיוחדים", items:["תכשיטים עם חריטה","מארזי מתנה"]}], promo:{img:"img/ring.jpg",t:"טבעות לכל רגע"}},
-  {key:"bags", label:"תיקים וארנקים"},
-  {key:"accessories", label:"כובעים וצעיפים"},
-  {key:"home", label:"שעוני קיר"},
-  {key:"repair", label:"מעבדת תיקונים", href:"repair.html"},
-  {key:"sale", label:"מבצעים", cls:"sale"}
-];
-
-const CATS = [
-  {key:"watches",label:"שעונים",img:"img/watch-rose.jpg"},
-  {key:"jewelry",label:"תכשיטים",img:"img/necklace-moon.jpg"},
-  {key:"bags",label:"תיקים",img:"img/bag-pink.jpg"},
-  {key:"wallets",label:"ארנקים",img:"img/wallet.jpg"},
-  {key:"accessories",label:"כובעים וצעיפים",img:"img/cap.jpg"},
-  {key:"home",label:"שעוני קיר",img:"img/wall-clock.jpg"}
-];
+let CATS = []; // from settings.categories, only those with visible products
 
 // loaded from data/*.json (edited via admin.html)
 let P = [], S = {};
@@ -475,36 +468,43 @@ let cart = store.get("bt-cart", {});
 let favs = new Set(store.get("bt-favs", []));
 
 /* ---------- RENDER ---------- */
-$("#desktopNav").innerHTML = "<ul>" + NAV.map(n => `<li>
-  ${n.href ? `<a href="${n.href}">${n.label}</a>` : `<a href="#shop" class="${n.cls||""}" onclick="filterCat('${n.key}')">${n.label}</a>`}
-  ${n.cols ? `<div class="mega"><div class="wrap">${n.cols.map(c => `<div><h4>${c.h}</h4><ul>${c.items.map(i => `<li><a href="#shop" onclick="filterCat('${n.key}')">${i}</a></li>`).join("")}</ul></div>`).join("")}
-    <a class="promo" href="#shop" onclick="filterCat('${n.key}')"><img src="${n.promo.img}" alt=""><span>${n.promo.t}</span></a></div></div>` : ""}
-</li>`).join("") + "</ul>";
-
-$("#mnavBody").innerHTML = NAV.map(n => n.cols
-  ? `<details><summary>${n.label}</summary><div>${n.cols.flatMap(c => c.items).map(i => `<a href="#shop" onclick="filterCat('${n.key}');toggleMnav(false)">${i}</a>`).join("")}</div></details>`
-  : n.href ? `<details><summary onclick="location.href='${n.href}'">${n.label}</summary></details>`
-  : `<details><summary onclick="filterCat('${n.key}');toggleMnav(false);location.hash='shop'" style="${n.cls?'color:var(--sale)':''}">${n.label}</summary></details>`).join("");
-
-$("#catGrid").innerHTML = CATS.map(c => `<a class="cat" href="#shop" onclick="filterCat('${c.key}')"><div class="ph"><img src="${c.img}" alt="" loading="lazy"></div><b>${c.label}</b></a>`).join("");
-
-const footLinks = (g) => [["שעונים","watches"],["תכשיטים","jewelry"],[g==="women"?"תיקים":"ארנקים", g==="women"?"bags":"wallets"],["מבצעים","sale"]]
-  .map(([l,k]) => `<li><a href="#shop" onclick="filterCat('${k}')">${l}</a></li>`).join("");
-$("#fWomen").innerHTML = footLinks("women");
-$("#fMen").innerHTML = footLinks("men");
+const catsFor = g => CATS.filter(c => P.some(p => p.cat === c.key && (!g || p.g === g || p.g === "unisex")));
+const go = (k, g) => `href="#shop" onclick="filterCat('${k}','${g||""}');toggleMnav(false)"`;
+function renderNav(){
+  const gender = (g, label) => {
+    const cs = catsFor(g); if (!cs.length) return null;
+    const promo = P.find(p => p.g === g) || P.find(p => p.g === "unisex");
+    return {label, link:go("all", g), mega:`<div><h4>קטגוריות</h4><ul>${cs.map(c => `<li><a ${go(c.key, g)}>${esc(c.label)}</a></li>`).join("")}</ul></div>
+      <div><h4>קיצורים</h4><ul><li><a ${go("all", g)}>כל המוצרים ${label}</a></li>${P.some(p => p.was && (p.g === g || p.g === "unisex")) ? `<li><a ${go("sale", g)}>מבצעים ${label}</a></li>` : ""}</ul></div><div></div>
+      ${promo ? `<a class="promo" ${go("all", g)}><img src="${esc(promo.img)}" alt=""><span>לקולקציה ${label} ←</span></a>` : "<div></div>"}`, sub:cs.map(c => [c.label, go(c.key, g)])};
+  };
+  const items = [gender("women", "לנשים"), gender("men", "לגברים"),
+    ...CATS.map(c => ({label:esc(c.label), link:go(c.key)})),
+    {label:"מעבדת תיקונים", link:'href="repair.html"'},
+    P.some(p => p.was) && {label:"מבצעים", link:go("sale"), cls:"sale"}].filter(Boolean);
+  $("#desktopNav").innerHTML = "<ul>" + items.map(n => `<li><a ${n.link} class="${n.cls||""}">${n.label}</a>${n.mega ? `<div class="mega"><div class="wrap">${n.mega}</div></div>` : ""}</li>`).join("") + "</ul>";
+  $("#mnavBody").innerHTML = items.map(n => n.sub
+    ? `<details><summary>${n.label}</summary><div><a ${n.link}>הכל</a>${n.sub.map(([l, a]) => `<a ${a}>${esc(l)}</a>`).join("")}</div></details>`
+    : `<details><summary><a ${n.link} style="flex:1;${n.cls ? "color:var(--sale)" : ""}">${n.label}</a></summary></details>`).join("");
+  $("#catGrid").innerHTML = CATS.map(c => `<a class="cat" ${go(c.key)}><div class="ph"><img src="${esc(c.img)}" alt="" loading="lazy"></div><b>${esc(c.label)}</b></a>`).join("");
+  $("#catGrid").style.gridTemplateColumns = innerWidth > 1000 ? `repeat(${Math.max(3, CATS.length)},1fr)` : "";
+  const foot = g => catsFor(g).map(c => `<li><a ${go(c.key, g)}>${esc(c.label)}</a></li>`).join("") + (P.some(p => p.was) ? `<li><a ${go("sale", g)}>מבצעים</a></li>` : "");
+  $("#fWomen").innerHTML = foot("women"); $("#fWomen").parentElement.hidden = !catsFor("women").length;
+  $("#fMen").innerHTML = foot("men"); $("#fMen").parentElement.hidden = !catsFor("men").length;
+}
 
 function card(p){
   const d = off(p);
   return `<article class="card">
     <div class="ph">
-      <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">
+      <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" onclick="openProduct(${p.id})" style="cursor:pointer">
       ${d ? `<span class="tag off">-${d}%</span>` : p.isNew ? `<span class="tag">חדש</span>` : ""}
       <button class="fav ${favs.has(p.id)?"on":""}" aria-label="הוספה למועדפים" onclick="toggleFav(${p.id},this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></button>
       ${p.stock > 0 ? `<button class="quick" onclick="addToCart(${p.id})">הוספה לסל +</button>` : ""}
     </div>
     <div class="info">
       <span class="brand">${esc(p.brand)}</span>
-      <span class="name">${esc(p.name)}</span>
+      <a class="name" href="javascript:void 0" onclick="openProduct(${p.id})">${esc(p.name)}</a>
       <span class="spec">${esc(p.spec)}</span>
       <div class="price">${d ? `<b class="red">${ils(p.price)}</b><s>${ils(p.was)}</s>` : `<b>${ils(p.price)}</b>`}</div>
       <span class="stock ${p.stock<=4?"low":""}">${p.stock <= 0 ? "אזל מהמלאי" : p.stock<=4 ? `נותרו ${p.stock} יחידות בלבד` : "✓ במלאי · נשלח תוך 24 שעות"}</span>
@@ -516,26 +516,45 @@ function setBest(g, el){
   document.querySelectorAll('[data-g]').forEach(t => t.classList.toggle("on", t === el));
   const list = P.filter(p => p.best && (p.g === g || p.g === "unisex"));
   $("#bestRail").innerHTML = list.map(card).join("");
+  document.querySelectorAll('[data-g]').forEach(t => t.hidden = !P.some(p => p.best && (p.g === t.dataset.g || p.g === "unisex")));
 }
 
-const SHOP_TABS = [["all","הכל"],["watches","שעונים"],["jewelry","תכשיטים"],["bags","תיקים"],["wallets","ארנקים"],["accessories","כובעים וצעיפים"],["home","שעוני קיר"],["sale","מבצעים"]];
-const LABELS = Object.fromEntries([...SHOP_TABS, ["women","לנשים"],["men","לגברים"]]);
-let currentCat = "all", query = "";
+const G_LABEL = {women:"לנשים", men:"לגברים"};
+let currentCat = "all", currentG = "", query = "";
+const catLabel = k => (CATS.find(c => c.key === k) || {}).label || "";
 
-function filterCat(k){ currentCat = k; query = ""; document.querySelectorAll('input[type=search]').forEach(i => i.value = ""); renderShop(); }
-function doSearch(q){ query = q.trim(); currentCat = "all"; renderShop(); if (query) $("#shop").scrollIntoView({behavior:"smooth"}); }
+function filterCat(k, g){ currentCat = k; currentG = g || ""; query = ""; document.querySelectorAll('input[type=search]').forEach(i => i.value = ""); renderShop(); }
+function doSearch(q){ query = q.trim(); currentCat = "all"; currentG = ""; renderShop(); if (query) $("#shop").scrollIntoView({behavior:"smooth"}); }
 
 function renderShop(){
-  $("#shopTabs").innerHTML = SHOP_TABS.map(([k,l]) => `<button class="tab ${k===currentCat?"on":""}" onclick="filterCat('${k}')">${l}</button>`).join("");
-  let list = P.filter(p => {
-    if (currentCat === "sale") return p.was;
-    if (currentCat === "women" || currentCat === "men") return p.g === currentCat || p.g === "unisex";
-    return currentCat === "all" || p.cat === currentCat;
-  });
-  if (query) list = list.filter(p => (p.name + p.brand + p.spec + (LABELS[p.cat]||"")).toLowerCase().includes(query.toLowerCase()));
-  $("#shopTitle").innerHTML = query ? `תוצאות עבור <em>"${query.replace(/</g,"&lt;")}"</em>` : currentCat === "all" ? "כל <em>המוצרים</em>" : `<em>${LABELS[currentCat]}</em>`;
+  const tabs = [["all","הכל"], ...catsFor(currentG).map(c => [c.key, c.label]), ...(P.some(p => p.was) ? [["sale","מבצעים"]] : [])];
+  $("#shopTabs").innerHTML = tabs.map(([k,l]) => `<button class="tab ${k===currentCat?"on":""}" onclick="filterCat('${k}','${currentG}')">${esc(l)}</button>`).join("");
+  let list = P.filter(p => (!currentG || p.g === currentG || p.g === "unisex") &&
+    (currentCat === "sale" ? p.was : currentCat === "all" || p.cat === currentCat));
+  if (query) list = P.filter(p => [p.name, p.brand, p.spec, p.details, catLabel(p.cat)].join(" ").toLowerCase().includes(query.toLowerCase()));
+  const title = currentCat === "all" ? "כל <em>המוצרים</em>" : currentCat === "sale" ? "<em>מבצעים</em>" : `<em>${esc(catLabel(currentCat))}</em>`;
+  $("#shopTitle").innerHTML = query ? `תוצאות עבור <em>"${esc(query)}"</em>` : title + (currentG ? " " + G_LABEL[currentG] : "");
   $("#shopGrid").innerHTML = list.length ? list.map(card).join("") : `<div class="empty">לא נמצאו מוצרים. נסו חיפוש אחר 🙂</div>`;
 }
+
+/* ---------- PRODUCT POPUP ---------- */
+function openProduct(id){
+  const p = P.find(x => x.id === id); if (!p) return;
+  const d = off(p), lines = (p.details || "").split("\n").map(l => l.trim()).filter(Boolean);
+  $("#pvBody").innerHTML = `
+    <img src="${esc(p.img)}" alt="${esc(p.name)}">
+    <div class="pv-info">
+      <span class="brand">${esc(p.brand)}</span>
+      <h3>${esc(p.name)}</h3>
+      <div class="price">${d ? `<b class="red">${ils(p.price)}</b><s>${ils(p.was)}</s><span class="tag off" style="position:static">-${d}%</span>` : `<b>${ils(p.price)}</b>`}</div>
+      ${p.spec ? `<p class="spec">${esc(p.spec)}</p>` : ""}
+      ${lines.length ? `<div class="pv-details"><h4>פרטים נוספים</h4><ul>${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>` : ""}
+      <span class="stock ${p.stock<=4?"low":""}">${p.stock <= 0 ? "אזל מהמלאי" : p.stock<=4 ? `נותרו ${p.stock} יחידות בלבד` : "✓ במלאי · נשלח תוך 24 שעות"}</span>
+      ${p.stock > 0 ? `<button class="btn btn-dark" onclick="addToCart(${p.id});closeProduct()">הוספה לסל</button>` : ""}
+    </div>`;
+  $("#pv").hidden = false; document.body.style.overflow = "hidden";
+}
+function closeProduct(){ $("#pv").hidden = true; document.body.style.overflow = ""; }
 
 /* ---------- CART ---------- */
 function addToCart(id){ cart[id] = (cart[id]||0) + 1; saveCart(); toast("נוסף לסל ✓"); toggleCart(true); }
@@ -581,7 +600,7 @@ function tick(){
 }
 tick(); setInterval(tick, 1000);
 
-document.addEventListener("keydown", e => { if (e.key === "Escape") { toggleCart(false); toggleMnav(false); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { toggleCart(false); toggleMnav(false); closeProduct(); } });
 
 /* ---------- SETTINGS (from data/settings.json) ---------- */
 function applySettings(){
@@ -615,8 +634,9 @@ async function init(){
     const v = "?v=" + Date.now();
     const [prods, settings] = await Promise.all([fetch("data/products.json" + v).then(r => r.json()), fetch("data/settings.json" + v).then(r => r.json())]);
     P = prods.filter(p => !p.hidden); S = settings;
+    CATS = (S.categories || []).filter(c => P.some(p => p.cat === c.key));
   } catch (e) { console.error(e); toast("שגיאה בטעינת הקטלוג"); }
-  applySettings();
+  applySettings(); renderNav();
   setBest("women", document.querySelector('[data-g=women]'));
   renderShop(); renderCart(); renderFavCount();
 }
